@@ -31,9 +31,9 @@
                 <div class="container" id="container2" > 
                     <h3 id="Titel">Topfschlag</h3>
                     <form method="GET" class="horizontal" id="search">
-                        <input type="text" name="search_text" value="${param.search_text}" placeholder="Rezept"/>       
+                        <input type="text" name="search_text" value="${param.search_text}" placeholder="Rezeptbezeichnung"/>       
                         <button class="icon-search" type="submit">
-                            Suchen
+                            Rezepte suchen
                         </button>
                     </form>
                     </br>
@@ -107,7 +107,7 @@
                             </ul>
                         </fieldset>
                         <br>
-                        <button type="button" id="filtern">Zeige Ergebnisse</button>
+                        <button type="button" id="filtern">Rezepte filtern</button>
                     </form>
                 </div>
             </div>
