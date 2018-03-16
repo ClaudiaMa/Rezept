@@ -5,10 +5,18 @@
  */
 package rezept.ejb;
 
+import javax.ejb.Stateless;
+import rezept.jpa.Grundzutat;
+
 /**
  *
  * @author Claudia
  */
-public class GrundzutatBean {
+@Stateless
+public class GrundzutatBean extends EntityBean<Grundzutat, Long>{
+    
+    public GrundzutatBean(){
+        super(Grundzutat.class);
+    }
     
 }

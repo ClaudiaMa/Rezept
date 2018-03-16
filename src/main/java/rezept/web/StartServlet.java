@@ -8,10 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Dieses Servlet zeigt, wie die Erzeugung des HTML-Codes an eine Java Server
- * Page ausgelagert werden kann.
- */
+
 @WebServlet(urlPatterns = {"/index.html"})
 public class StartServlet extends HttpServlet {
 

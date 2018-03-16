@@ -5,10 +5,18 @@
  */
 package rezept.ejb;
 
+import javax.ejb.Stateless;
+import rezept.jpa.Anlass;
+
 /**
  *
  * @author Claudia
  */
-public class AnlassBean {
+@Stateless
+public class AnlassBean extends EntityBean<Anlass, Long> {
+    
+    public AnlassBean() {
+        super(Anlass.class);
+    }
     
 }

@@ -5,10 +5,18 @@
  */
 package rezept.ejb;
 
+import javax.ejb.Stateless;
+import rezept.jpa.Allergie;
+
 /**
  *
  * @author Claudia
  */
-public class AllergieBean {
+@Stateless
+public class AllergieBean extends EntityBean<Allergie, Long> {
+    
+    public AllergieBean() {
+        super(Allergie.class);
+    }
     
 }

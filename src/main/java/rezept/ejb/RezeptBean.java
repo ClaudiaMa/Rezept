@@ -5,10 +5,19 @@
  */
 package rezept.ejb;
 
+import javax.ejb.Stateless;
+import rezept.jpa.Rezept;
+
 /**
  *
  * @author Claudia
  */
-public class RezeptBean {
+
+@Stateless
+public class RezeptBean extends EntityBean<Rezept, Long> {
+    
+    public RezeptBean() {
+        super(Rezept.class);
+    }
     
 }
