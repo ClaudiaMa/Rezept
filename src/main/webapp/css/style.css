@@ -7,7 +7,12 @@ html, body {
     padding: 0;
 }
 
-
+#container2{
+    font-size: 11pt;
+    margin: 0;
+    padding: 1em;
+    
+}
 
 html {
     background-image: url(../hintergrund.jpg);
@@ -23,7 +28,9 @@ body {
     background-color: transparent;
 
 }
-
+#Titel{
+    color: green;
+}
 .container {
     background: rgba(153,255,105,0.8);
     border-radius: 0.5em;

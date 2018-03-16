@@ -29,7 +29,7 @@
 
             <div class="col-3 left">
                 <div class="container" id="container2" > 
-
+                    <h3 id="Titel">Topfschlag</h3>
                     <form method="GET" class="horizontal" id="search">
                         <input type="text" name="search_text" value="${param.search_text}" placeholder="Rezept"/>       
                         <button class="icon-search" type="submit">

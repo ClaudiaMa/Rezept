@@ -13,19 +13,19 @@
             <!-- Zeile mit drei gleichgroßen Spalten -->
             <div class="row">
                 <div class="col-md-4">
-                    <h2>Rezept 1</h2>
+                    <h4>Rezept 1</h4>
                     <img src="Bild.jpg" id="Repezeptbild"/>
                     <p name="rezept_dauer">Dauer:${rezept_form.values["rezept_dauer"][0]}</p>
                     <p name="rezept_aufwand">Aufwand:${rezept_form.values["rezept_aufwand"][0]}</p>
                 </div>
                 <div class="col-md-4">
-                    <h2>Rezept 2</h2>
+                    <h4>Rezept 2</h4>
                     <img src="Bild.jpg" id="Repezeptbild"/>
                     <p name="rezept_dauer">Dauer:${rezept_form.values["rezept_dauer"][0]}</p>
                     <p name="rezept_aufwand">Aufwand:${rezept_form.values["rezept_aufwand"][0]}</p>
                 </div>
                 <div class="col-md-4">
-                    <h2>Rezept 3</h2>
+                    <h4>Rezept 3</h4>
                     <img src="Bild.jpg" id="Repezeptbild"/>
                     <p name="rezept_dauer">Dauer:${rezept_form.values["rezept_dauer"][0]}</p>
                     <p name="rezept_aufwand">Aufwand:${rezept_form.values["rezept_aufwand"][0]}</p>
@@ -33,19 +33,19 @@
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <h2>Rezept 4</h2>
+                    <h4>Rezept 4</h4>
                     <img src="Bild.jpg" id="Repezeptbild"/>
                     <p name="rezept_dauer">Dauer:${rezept_form.values["rezept_dauer"][0]}</p>
                     <p name="rezept_aufwand">Aufwand:${rezept_form.values["rezept_aufwand"][0]}</p>
                 </div>
                 <div class="col-md-4">
-                    <h2>Rezept 5</h2>
+                    <h4>Rezept 5</h4>
                     <img src="Bild.jpg" id="Repezeptbild"/>
                     <p name="rezept_dauer">Dauer:${rezept_form.values["rezept_dauer"][0]}</p>
                     <p name="rezept_aufwand">Aufwand:${rezept_form.values["rezept_aufwand"][0]}</p>
                 </div>
                 <div class="col-md-4">
-                    <h2>Rezept 6</h2>
+                    <h4>Rezept 6</h4>
                     <img src="Bild.jpg" id="Repezeptbild"/>
                     <p name="rezept_dauer">Dauer:${rezept_form.values["rezept_dauer"][0]}</p>
                     <p name="rezept_aufwand">Aufwand:${rezept_form.values["rezept_aufwand"][0]}</p>
