@@ -18,9 +18,8 @@ public class StartServlet extends HttpServlet {
       
         // Anfrage an eine JSP weiterleiten, um damit den HTML-Code
         // der Seite zu generieren
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/übersichtseite.jsp");
-        dispatcher.forward(request, response);
-
+         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/startseite.jsp");
+         dispatcher.forward(request, response);
         
     }
 
@@ -29,7 +28,27 @@ public class StartServlet extends HttpServlet {
     throws IOException, ServletException {
         
         // Und die Seite nochmal laden lassen
-        response.sendRedirect(request.getRequestURI());
-    }
+        //response.sendRedirect(request.getRequestURI());
+        
+        request.setCharacterEncoding("utf-8");
 
+        String action = request.getParameter("action");
+
+        if (action == null) {
+            action = "";
+        }
+
+        switch (action) {
+            case "filtern":
+                response.sendRedirect(request.getContextPath() + "/uebersicht");
+                break;
+            case "suche":
+                response.sendRedirect(request.getContextPath() + "/übersicht.html");
+                break;
+                
+              
+        
+        
+    }
+    }
 }

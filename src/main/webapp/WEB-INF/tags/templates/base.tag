@@ -29,13 +29,15 @@
 
             <div class="col-3 left">
                 <div class="container" id="container2" > 
-                    <h3 id="Titel">Topfschlag</h3>
-                    <form method="GET" class="horizontal" id="search">
+                    <h3 id="Titel">Topfschlag</h3
+                    
+                    
+                   
+                    
+                   <form method="POST" class="horizontal" id="search" > 
                         <input type="text" name="search_text" value="${param.search_text}" placeholder="Rezeptbezeichnung"/>       
-                        <button class="icon-search" type="submit">
-                            Rezepte suchen
-                        </button>
-                    </form>
+                        <button type="submit" name="action" value="suche">Rezepte suchen</button>
+                    </form> 
                     
                     
                     <h4>Anlass</h4>
@@ -107,7 +109,8 @@
                             </ul>
                         </fieldset>
                         <br>
-                        <button type="button" id="filtern">Rezepte filtern</button>
+                        <button type="submit" name="action" value="filtern">Rezepte filtern</button>
+                        
                     </form>
                 </div>
             </div>
