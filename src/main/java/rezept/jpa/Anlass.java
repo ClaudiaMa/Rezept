@@ -8,22 +8,27 @@ package rezept.jpa;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.TableGenerator;
 
 
-@Entity
+@Entity(name="ANLASS")
 public class Anlass implements Serializable {
    
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name="anlass_id", nullable = false)
+    @GeneratedValue(generator="anlass_id")
+    @TableGenerator(name="anlass_id", initialValue = 0, allocationSize = 50)
+    private Long anlassId;
     
-    @ManyToMany
-    List<Rezept> rezepten = new ArrayList<>();
+    @ManyToMany(mappedBy="anlassListe",fetch=FetchType.EAGER)
+    private List<Rezept> rezeptListe;
     
     private String name = "";
  
@@ -32,19 +37,19 @@ public class Anlass implements Serializable {
     public Anlass() {
     }
     
-    public Anlass(Long id, String name) {
-        this.id = id;
+    public Anlass(String name) {
+        
         this.name = name;
     }
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Getter und Setter">
     public Long getId() {
-        return id;
+        return anlassId;
     }
     
     public List<Rezept> getRezepten() {
-        return rezepten;
+        return rezeptListe;
     }
     
     public String getName() {
@@ -52,11 +57,11 @@ public class Anlass implements Serializable {
     }
     
     public void setId(Long id) {
-        this.id = id;
+        this.anlassId = id;
     }
     
     public void setRezepten(List<Rezept> rezepten) {
-        this.rezepten = rezepten;
+        this.rezeptListe = rezepten;
     }
     
     public void setName(String name) {

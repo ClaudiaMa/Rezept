@@ -9,20 +9,17 @@
     
     <jsp:attribute name="content">
         <body>
-            <c:choose>
-            <c:when test="${empty rezepte}">
-                <p>
-                    Es wurden noch keine Rezepte gefunden. 🐈
-                </p>
-            </c:when>
-            <c:otherwise>
+           
              
                 <div class="row">
-                    <c:forEach items="${rezepte}" var="rezept">
-                        <div class="col-md-4">
+                    
+                    <!-- kann man Schleife auch weglassen??-->
+                    <c:forEach items="${rezept}" var="rezept">
+                        <div class="col-md-12">
                         <tr>
                             
                             <h4>
+                                <!-- eventuelle a href weglassen und nur c:out --> 
                                 <a href="<c:url value="/detailansicht/${rezept.id}/"/>">
                                     <c:out value="${rezept.rezeptname}"/>
                                 </a>
@@ -37,15 +34,20 @@
                                 <c:out value="${rezept.aufwand}}"/>
                             </p>
                             </td>
+                             <td>
+                            <p name="rezept_rezeptbeschreibung">Rezeptbeschreibung:
+                                <c:out value="${rezept.rezeptbeschreibung}}"/>
+                            </p>
+                            </td>
+                            
+                            
                             
                         </tr>
                         </div>
                     </c:forEach>
                 </div>
-            </c:otherwise>
-        </c:choose>
+           
         </body>
-
     </jsp:attribute>
 
 </template:base>

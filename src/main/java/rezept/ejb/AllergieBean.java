@@ -19,4 +19,6 @@ public class AllergieBean extends EntityBean<Allergie, Long> {
         super(Allergie.class);
     }
     
+    
+    
 }

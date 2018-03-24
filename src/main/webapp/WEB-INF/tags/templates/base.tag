@@ -31,87 +31,55 @@
                 <div class="container" id="container2" > 
                     <h3 id="Titel">Topfschlag</h3
                     
-                    
+                   <form method="GET" class="horizontal" id="search" > 
+                    </form> 
                    
                     
-                   <form method="POST" class="horizontal" id="search" > 
+                   <form method="GET" class="horizontal" id="search" > 
                         <input type="text" name="search_text" value="${param.search_text}" placeholder="Rezeptbezeichnung"/>       
                         <button type="submit" name="action" value="suche">Rezepte suchen</button>
                     </form> 
                     
-                    
-                    <h4>Anlass</h4>
-                    <form action="filter">
-                        <fieldset>
-                            <ul>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" name="anlass" value="frühstück" id="check1">Frühstück</label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" name="anlass" value="brunch" id="check2">Brunch</label>
-                                </li>
-                                <li>
-                                    <label for="check3">
-                                        <input type="checkbox" name="anlass" value="mittagesseb" id="check3">Mittagessen</label>
-                                </li>
-                                <li>
-                                    <label for="check4">
-                                        <input type="checkbox" name="anlass" value="abendessen" id="check4">Abendessen</label>
-                                </li>
-                            </ul>
-                        </fieldset>
-                    </form>
+
+                        
+                     <h4>Anlass</h4>
+                     <c:forEach items="${filterAnlässe}" var="anlass">
+                         <ul>
+                             <li>
+                                 <label>
+                                     <input type="checkbox" name="anlass"> ${anlass.name} </label>  
+                             </li>
+                         </ul>
+                    </c:forEach>
 
                     <h4>Zutaten</h4>
-                    <form action="filter">
-                        <fieldset>
-                            <ul>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" name="zutat" value="eier" id="check1">Eier</label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" name="zutat" value="nudeln" id="check2">Nudeln</label>
-                                </li>
-                                <li>
-                                    <label for="check3">
-                                        <input type="checkbox" name="zutat" value="kartoffeln" id="check3">Kartoffeln</label>
-                                </li>
-                                <li>
-                                    <label for="check4">
-                                        <input type="checkbox" name="zutat" value="tomaten" id="check4">Tomaten</label>
-                                </li>
-                            </ul>
-                        </fieldset>
-                    </form>
-
-
+                     <c:forEach items="${filterZutaten}" var="zutat">
+                         <ul>
+                             <li>
+                                 <label>
+                                     <input type="checkbox" name="zutat"> ${zutat.name} </label>    
+                             </li>
+                         </ul>
+                    </c:forEach>
+                    
+                   
                     <h4>Allergien</h4>
-                    <form action="filter">
-                        <fieldset>
-                            <ul>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" name="allergie" value="weizen" id="check1">Weizen</label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" name="allergie" value="gluten" id="check2">Gluten</label>
-                                </li>
-                                <li>
-                                    <label for="check4">
-                                        <input type="checkbox" name="allergie" value="laktose" id="check4">Laktose</label>
-                                </li>
+                     <c:forEach items="${filterAllergien}" var="allergie">
+                         <ul>
+                             <li>
+                                 <label>
+                                     <input type="checkbox" name="allergie"> ${allergie.name} </label>    
+                             </li>
+                         </ul>
+                    </c:forEach>
 
-                            </ul>
-                        </fieldset>
-                        <br>
-                        <button type="submit" name="action" value="filtern">Rezepte filtern</button>
+                   
                         
-                    </form>
+                        <form method="GET" class="horizontal" id="search" > 
+                        <button type="submit" name="action" value="filtern">Rezepte filtern</button>
+                        </form>
+                        
+                    
                 </div>
             </div>
 
