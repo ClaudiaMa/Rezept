@@ -1,7 +1,6 @@
 package rezept.web;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,7 +57,7 @@ public class StartServlet extends HttpServlet {
         
        
         //Anlass Tabelle befüllen/ prüfen
-        List<Anlass> anlässe = em.createQuery("SELECT a FROM ANLASS a ").getResultList();
+        List<Anlass> anlässe = em.createQuery("SELECT a FROM Anlass a ").getResultList();
         
         if (anlässe.isEmpty()) {
             try {
@@ -87,7 +86,7 @@ public class StartServlet extends HttpServlet {
         }
         
         //Zutaten Tabelle befüllen/ prüfen
-        List<Grundzutat> zutaten = em.createQuery("SELECT z FROM GRUNDZUTAT z ").getResultList();
+        List<Grundzutat> zutaten = em.createQuery("SELECT z FROM Grundzutat z ").getResultList();
         
         if (zutaten.isEmpty()) {
             try {
@@ -118,7 +117,7 @@ public class StartServlet extends HttpServlet {
         }
         
         //Allergien Tabelle befüllen/ prüfen
-        List<Allergie> allergien = em.createQuery("SELECT a FROM ALLERGIE a ").getResultList();
+        List<Allergie> allergien = em.createQuery("SELECT a FROM Allergie a ").getResultList();
         
         if (allergien.isEmpty()) {
             try {
@@ -148,7 +147,7 @@ public class StartServlet extends HttpServlet {
         
         
         //Rezept Tabelle prüfen 
-         List<Rezept> rezepte = em.createQuery("SELECT r FROM REZEPT r ").getResultList();
+         List<Rezept> rezepte = em.createQuery("SELECT r FROM Rezept r ").getResultList();
         
         if(rezepte.isEmpty()){
              try {
@@ -204,7 +203,7 @@ public class StartServlet extends HttpServlet {
         
         
         //Button "Rezepte suchen" wurde gedrückt
-        if (action.equals("suche")) {
+        if (action.equals("suchen")) {
             
             //<editor-fold defaultstate="collapsed" desc="Inhalt wenn Button "suchen" gedrückt wurde">
             //Suchparameter aus der URL lesen und gesetzte Filter identifizieren!
@@ -228,6 +227,10 @@ public class StartServlet extends HttpServlet {
             //<editor-fold defaultstate="collapsed" desc="Inhalt wenn Button "filtern" gedrückt wurd">
             //Boolean-Werte für einzelne Filterelemente erstellen
             
+            
+            // auf anderen Servlet verweisen
+            response.sendRedirect("/Rezept/suche");
+            /*
             //Anlass:
             Anlass frühstück = null;
             Anlass brunch = null;
@@ -337,9 +340,9 @@ public class StartServlet extends HttpServlet {
                   
             List<Rezept> rezepte = this.rezeptBean.searchByFilters(frühstück, brunch, mittagessen, abendessen, eier, nudeln, kartoffeln, tomaten, weizen, gluten, laktose);
             request.setAttribute("rezepte", rezepte);
-            
+            */
             // Anfrage an die JSP weiterleiten
-            request.getRequestDispatcher("/WEB-INF/app/startseite.jsp").forward(request, response);
+            //request.getRequestDispatcher("/WEB-INF/app/startseite.jsp").forward(request, response);
             
             
         }

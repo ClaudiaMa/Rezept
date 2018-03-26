@@ -8,9 +8,7 @@ package rezept.jpa;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,19 +16,19 @@ import javax.persistence.ManyToMany;
 import javax.persistence.TableGenerator;
 
 
-@Entity(name="GRUNDZUTAT")
+@Entity
 public class Grundzutat implements Serializable {
 
     @Id
-    @Column(name="grundzutat_id", nullable = false)
     @GeneratedValue(generator="grundzutat_id")
     @TableGenerator(name="grundzutat_id", initialValue = 0, allocationSize = 50)
-    private Long grundzutatId;
+    private Long id;
+    
+    @ManyToMany
+    List<Rezept> rezepten = new ArrayList<>();
     
     private String name = "";
     
-    @ManyToMany(mappedBy="grundzutatListe",fetch=FetchType.EAGER)
-    private List<Rezept> rezeptListe;
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
     public Grundzutat() {
     }
@@ -43,11 +41,11 @@ public class Grundzutat implements Serializable {
 
 //<editor-fold defaultstate="collapsed" desc="Getter und Setter">
     public Long getId() {
-        return grundzutatId;
+        return id;
     }
     
     public List<Rezept> getRezepten() {
-        return rezeptListe;
+        return rezepten;
     }
     
     public String getName() {
@@ -55,11 +53,11 @@ public class Grundzutat implements Serializable {
     }
     
     public void setId(Long id) {
-        this.grundzutatId = id;
+        this.id = id;
     }
     
     public void setRezepten(List<Rezept> rezepten) {
-        this.rezeptListe = rezepten;
+        this.rezepten = rezepten;
     }
     
     public void setName(String name) {

@@ -5,8 +5,11 @@
  */
 package rezept.ejb;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -50,44 +53,60 @@ public class RezeptBean extends EntityBean<Rezept, Long> {
     }
     //</editor-fold>
      
-     public List<Rezept> searchByFilters(Anlass frühstück, Anlass brunch, Anlass mittagessen, Anlass abendessen, Grundzutat eier, Grundzutat nudeln, Grundzutat kartoffeln, Grundzutat tomaten, Allergie weizen, Allergie gluten, Allergie laktose) {
-         
-         // Hilfsobjekt zum Bauen des Query
-        CriteriaBuilder cb = this.em.getCriteriaBuilder();
-        
-         // SELECT r FROM Rezept r
-        CriteriaQuery<Rezept> query = cb.createQuery(Rezept.class);
-        Root<Rezept> from = query.from(Rezept.class);
-        query.select(from);
-        
-        //WHERE-Abfragen bauen, je nachdem ob boolean true oder false
-        
-        //Anlässe
-        if (frühstück != null) {
-            query.where(cb.equal(from.get("rezept.anlässe.name"), "frühstück"));
-        }
-        
-       
-        //SELECT r FROM Rezept AS r WHERE : frühstück MEMBER OF r.anlässe
-        
-        
+    public List<Rezept> searchByFilters(List<Anlass> anlaesse, List<Grundzutat> grundzutaten, List<Allergie> allergien) {
+    // WHERE-Bedingungen für die Filteroptionen zusammenbauen
+    String select = "SELECT r FROM Rezept r";
+    String where = "";
 
+    Map<String, Object> parameters = new HashMap<>();
+    int i = 0;
+
+    for (Anlass anlass : anlaesse) {
+        i++;
+        parameters.put("" + i, anlass);
+
+        if (!where.isEmpty()) {
+            where += " AND ";
+        }
+
+        where += ":" + i + " MEMBER OF r.anlässe";
+    }
+    
+    for (Grundzutat grundzutat : grundzutaten) {
+        i++;
+        parameters.put("" + i, grundzutat);
+
+        if (!where.isEmpty()) {
+            where += " AND ";
+        }
+
+        where += ":" + i + " MEMBER OF r.grundzutaten";
+    }
+    
+    for (Allergie allergie : allergien) {
+        i++;
+        parameters.put("" + i, allergie);
+
+        if (!where.isEmpty()) {
+            where += " AND ";
+        }
+
+        where += ":" + i + " MEMBER OF r.allergien";
+    }
+
+    // Finalen SELECT-String zusammenbauen und Suche ausführen
+    if (!where.isEmpty()) {
+        select += " WHERE " + where;
+    }
+
+    Query query = em.createQuery(select);
+
+    for (String key : parameters.keySet()) {
+        query.setParameter(key, parameters.get(key));
+    }
+
+    return query.getResultList();
+}
         
-        
-        
-        //Zutaten
-        
-        //Allergien
-        
-        
-        
-        
-        
-        
-         
-         return em.createQuery(query).getResultList();
-     }
-             
-             
     
 }

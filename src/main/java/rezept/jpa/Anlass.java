@@ -10,7 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package rezept.jpa;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,17 +28,16 @@ import javax.persistence.ManyToMany;
 import javax.persistence.TableGenerator;
 
 
-@Entity(name="ANLASS")
+@Entity
 public class Anlass implements Serializable {
    
     @Id
-    @Column(name="anlass_id", nullable = false)
     @GeneratedValue(generator="anlass_id")
     @TableGenerator(name="anlass_id", initialValue = 0, allocationSize = 50)
-    private Long anlassId;
+    private Long id;
     
-    @ManyToMany(mappedBy="anlassListe",fetch=FetchType.EAGER)
-    private List<Rezept> rezeptListe;
+    @ManyToMany
+    List<Rezept> rezepten = new ArrayList<>();
     
     private String name = "";
  
@@ -45,11 +54,11 @@ public class Anlass implements Serializable {
 
 //<editor-fold defaultstate="collapsed" desc="Getter und Setter">
     public Long getId() {
-        return anlassId;
+        return id;
     }
     
     public List<Rezept> getRezepten() {
-        return rezeptListe;
+        return rezepten;
     }
     
     public String getName() {
@@ -57,11 +66,11 @@ public class Anlass implements Serializable {
     }
     
     public void setId(Long id) {
-        this.anlassId = id;
+        this.id = id;
     }
     
     public void setRezepten(List<Rezept> rezepten) {
-        this.rezeptListe = rezepten;
+        this.rezepten = rezepten;
     }
     
     public void setName(String name) {

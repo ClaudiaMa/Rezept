@@ -37,11 +37,11 @@
                     
                    <form method="GET" class="horizontal" id="search" > 
                         <input type="text" name="search_text" value="${param.search_text}" placeholder="Rezeptbezeichnung"/>       
-                        <button type="submit" name="action" value="suche">Rezepte suchen</button>
+                        <button type="submit" name="action" value="suchen">Rezepte suchen</button>
                     </form> 
                     
 
-                        
+                     <form method="POST" action="suche">
                      <h4>Anlass</h4>
                      <c:forEach items="${filterAnlässe}" var="anlass">
                          <ul>
@@ -72,7 +72,7 @@
                              </li>
                          </ul>
                     </c:forEach>
-
+                     </form>
                    
                         
                         <form method="GET" class="horizontal" id="search" > 

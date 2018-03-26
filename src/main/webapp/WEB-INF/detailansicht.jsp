@@ -11,7 +11,7 @@
         <body>
            
              
-                <div class="row">
+                
                     
                     <!-- kann man Schleife auch weglassen??-->
                     <c:forEach items="${rezept}" var="rezept">
@@ -45,7 +45,7 @@
                         </tr>
                         </div>
                     </c:forEach>
-                </div>
+                
            
         </body>
     </jsp:attribute>

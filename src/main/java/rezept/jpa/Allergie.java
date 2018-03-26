@@ -6,29 +6,25 @@
 package rezept.jpa;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.TableGenerator;
-import static jdk.nashorn.internal.runtime.Debug.id;
 
 
-@Entity(name="ALLERGIE")
+@Entity
 public class Allergie implements Serializable {
 
     @Id
-    @Column(name="allergie_id", nullable = false)
     @GeneratedValue(generator="allergie_id")
     @TableGenerator(name="allergie_id", initialValue = 0, allocationSize = 50)
-    private Long allergieId;
+    private Long id;
     
-    
-    @ManyToMany(mappedBy="allergieListe",fetch=FetchType.EAGER)
-    private List<Rezept> rezeptListe;
+    @ManyToMany
+    List<Rezept> rezepten = new ArrayList<>();
     
     private String name = "";
 
@@ -44,11 +40,11 @@ public class Allergie implements Serializable {
 
 //<editor-fold defaultstate="collapsed" desc="Getter und Setter">
     public Long getId() {
-        return allergieId;
+        return id;
     }
     
     public List<Rezept> getRezepten() {
-        return rezeptListe;
+        return rezepten;
     }
     
     public String getName() {
@@ -56,11 +52,11 @@ public class Allergie implements Serializable {
     }
     
     public void setId(Long id) {
-        this.allergieId = id;
+        this.id = id;
     }
     
     public void setRezepten(List<Rezept> rezepten) {
-        this.rezeptListe = rezepten;
+        this.rezepten = rezepten;
     }
     
     public void setName(String name) {

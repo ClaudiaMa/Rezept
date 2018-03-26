@@ -6,62 +6,25 @@
 package rezept.jpa;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 
 @Entity
-@Table(name="REZEPT")
 public class Rezept implements Serializable {
 
-    //<editor-fold defaultstate="collapsed" desc="Many-to-Many Beziehungen zu Anlass, Allegie und Grundzutat">
     @Id
-    @Column(name="rezept_id")
     @GeneratedValue(generator="rezept_id")
     @TableGenerator(name="rezept_id", initialValue = 0, allocationSize = 50)
-    private Long rezeptId;
+    private Long id;
     
-    @ManyToMany
-    @JoinTable(name="rezept_anlass",
-            joinColumns=
-                    @JoinColumn(name="rezept_id", referencedColumnName="rezept_id"),
-            inverseJoinColumns=
-                    @JoinColumn(name="anlass_id", referencedColumnName="anlass_id")
-    )
-    private List<Anlass> anlassListe;
-    
-    
-    
-    @ManyToMany
-    @JoinTable(name="rezept_allergie",
-            joinColumns=
-                    @JoinColumn(name="rezept_id", referencedColumnName="rezept_id"),
-            inverseJoinColumns=
-                    @JoinColumn(name="allergie_id", referencedColumnName="allergie_id")
-    )
-    private List<Allergie> allergieListe;
-    
-    
-    @ManyToMany
-    @JoinTable(name="rezept_allergie",
-            joinColumns=
-                    @JoinColumn(name="rezept_id", referencedColumnName="rezept_id"),
-            inverseJoinColumns=
-                    @JoinColumn(name="grundzutat_id", referencedColumnName="grundzutat_id")
-    )
-    private List<Grundzutat> grundzutatListe;
-    
-//</editor-fold>
-                  
-    /*@ManyToMany(mappedBy="rezepten")
+    @ManyToMany(mappedBy="rezepten")
     List<Allergie> allergien = new ArrayList<>();
     
     @ManyToMany(mappedBy="rezepten")
@@ -69,7 +32,7 @@ public class Rezept implements Serializable {
     
     @ManyToMany(mappedBy="rezepten")
     List<Grundzutat> grundzutaten = new ArrayList<>();
-    */
+    
     
     private String rezeptname = "";
     private String rezeptbeschreibung = "";
@@ -83,7 +46,7 @@ public class Rezept implements Serializable {
     }
     
     public Rezept(String rezeptname, String rezeptbeschreibung, String aufwand, int dauer, String bild){
-        
+       
         this.rezeptname = rezeptname;
         this.rezeptbeschreibung = rezeptbeschreibung;
         this.aufwand = aufwand;
@@ -94,19 +57,19 @@ public class Rezept implements Serializable {
 
 //<editor-fold defaultstate="collapsed" desc="Getter und Setter">
     public Long getId() {
-        return rezeptId;
+        return id;
     }
     
     public List<Allergie> getAllergien() {
-        return allergieListe;
+        return allergien;
     }
     
     public List<Anlass> getAnlässe() {
-        return anlassListe;
+        return anlässe;
     }
     
     public List<Grundzutat> getGrundzutaten() {
-        return grundzutatListe;
+        return grundzutaten;
     }
     
     public String getRezeptname() {
@@ -130,19 +93,19 @@ public class Rezept implements Serializable {
     }
     
     public void setId(Long id) {
-        this.rezeptId = id;
+        this.id = id;
     }
     
     public void setAllergien(List<Allergie> allergien) {
-        this.allergieListe = allergien;
+        this.allergien = allergien;
     }
     
     public void setAnlässe(List<Anlass> anlässe) {
-        this.anlassListe = anlässe;
+        this.anlässe = anlässe;
     }
     
     public void setGrundzutaten(List<Grundzutat> grundzutaten) {
-        this.grundzutatListe = grundzutaten;
+        this.grundzutaten = grundzutaten;
     }
     
     public void setRezeptname(String rezeptname) {
@@ -168,3 +131,4 @@ public class Rezept implements Serializable {
 
 
 }
+
