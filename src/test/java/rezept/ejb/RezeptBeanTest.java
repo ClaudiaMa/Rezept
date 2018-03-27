@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  * @author Alina
  */
 public class RezeptBeanTest {
-    
+   
   
   @Test
   public void testStringHasNumbers() {
