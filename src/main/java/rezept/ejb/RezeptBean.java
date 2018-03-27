@@ -34,6 +34,8 @@ public class RezeptBean extends EntityBean<Rezept, Long> {
     //<editor-fold defaultstate="collapsed" desc="Suchen anhand Text in der Suchleiste">
     public List<Rezept> search(String search) {
         
+        boolean stringIsValid = isValid(search);
+        if (stringIsValid == true ) {
         // Hilfsobjekt zum Bauen des Query
         CriteriaBuilder cb = this.em.getCriteriaBuilder();
         
@@ -46,10 +48,26 @@ public class RezeptBean extends EntityBean<Rezept, Long> {
         if (search != null && !search.trim().isEmpty()) {
             //query.where(cb.like(from.get("rezeptbeschreibung"), "%" + search + "%"));
         }
-        
-        
-        
+       
         return em.createQuery(query).getResultList();
+        }
+        
+        else {
+            return null;
+        }
+    }
+    
+    public boolean isValid (String search) {
+        String numberRegex = ".*[0-9].*";
+        String specialcharRegex = ".*[!§$%&@+#'^°].*";
+        
+        if ( search.matches(numberRegex) || search.matches(specialcharRegex)) {
+            return false;
+        }
+        
+        else {
+            return true;
+        }
     }
     //</editor-fold>
      

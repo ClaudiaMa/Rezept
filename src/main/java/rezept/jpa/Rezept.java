@@ -8,6 +8,7 @@ package rezept.jpa;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,13 +25,13 @@ public class Rezept implements Serializable {
     @TableGenerator(name="rezept_id", initialValue = 0, allocationSize = 50)
     private Long id;
     
-    @ManyToMany(mappedBy="rezepten")
+    @ManyToMany(mappedBy="rezepten", cascade = {CascadeType.PERSIST})
     List<Allergie> allergien = new ArrayList<>();
     
-    @ManyToMany(mappedBy="rezepten")
+    @ManyToMany(mappedBy="rezepten", cascade = {CascadeType.PERSIST})
     List<Anlass> anlässe = new ArrayList<>();
     
-    @ManyToMany(mappedBy="rezepten")
+    @ManyToMany(mappedBy="rezepten", cascade = {CascadeType.PERSIST})
     List<Grundzutat> grundzutaten = new ArrayList<>();
     
     

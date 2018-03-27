@@ -38,7 +38,7 @@ public class SuchServlet extends HttpServlet {
     RezeptBean rezeptBean;
     
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse repsonse)
+    public void doGet(HttpServletRequest request, HttpServletResponse repsonse)
             throws IOException, ServletException {
     
         List<Anlass> anlaesse = new ArrayList<>();

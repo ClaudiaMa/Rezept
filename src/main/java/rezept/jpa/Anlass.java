@@ -8,18 +8,7 @@ package rezept.jpa;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package rezept.jpa;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,7 +25,7 @@ public class Anlass implements Serializable {
     @TableGenerator(name="anlass_id", initialValue = 0, allocationSize = 50)
     private Long id;
     
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST})
     List<Rezept> rezepten = new ArrayList<>();
     
     private String name = "";

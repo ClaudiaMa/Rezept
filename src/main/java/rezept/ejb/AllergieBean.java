@@ -5,8 +5,10 @@
  */
 package rezept.ejb;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import rezept.jpa.Allergie;
+
 
 /**
  *
@@ -19,6 +21,18 @@ public class AllergieBean extends EntityBean<Allergie, Long> {
         super(Allergie.class);
     }
     
-    
+    public Allergie findByName(String name) {
+        if (name == null) {
+            return null;
+        }
+        
+        List<Allergie> ergebnis = em.createQuery("SELECT a FROM Allergie a WHERE a.name = :name").setParameter("name", name).getResultList();
+        
+        if (ergebnis.isEmpty()) {
+            return null;
+        } else {
+            return ergebnis.get(0);
+        }
+    }
     
 }

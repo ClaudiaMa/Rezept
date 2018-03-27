@@ -30,56 +30,57 @@
             <div class="col-3 left">
                 <div class="container" id="container2" > 
                     <h3 id="Titel">Topfschlag</h3
+
+
+                    <form method="GET">                        
+                    </form>
                     
-                   <form method="GET" class="horizontal" id="search" > 
-                    </form> 
-                   
-                    
-                   <form method="GET" class="horizontal" id="search" > 
+                    <form method="GET" action="suche">
                         <input type="text" name="search_text" value="${param.search_text}" placeholder="Rezeptbezeichnung"/>       
                         <button type="submit" name="action" value="suchen">Rezepte suchen</button>
-                    </form> 
-                    
+                    </form>
 
-                     <form method="POST" action="suche">
-                     <h4>Anlass</h4>
-                     <c:forEach items="${filterAnlässe}" var="anlass">
-                         <ul>
-                             <li>
-                                 <label>
-                                     <input type="checkbox" name="anlass"> ${anlass.name} </label>  
-                             </li>
-                         </ul>
-                    </c:forEach>
+                    <form method="GET" action="suche">
+                        <h4>Anlass</h4>
+                        <c:forEach items="${filterAnlässe}" var="anlass">
+                            <ul>
+                                <li>
+                                    <label>
+                                        <input type="checkbox" name="anlass"> ${anlass.name} </label>  
+                                </li>
+                            </ul>
+                        </c:forEach>
 
-                    <h4>Zutaten</h4>
-                     <c:forEach items="${filterZutaten}" var="zutat">
-                         <ul>
-                             <li>
-                                 <label>
-                                     <input type="checkbox" name="zutat"> ${zutat.name} </label>    
-                             </li>
-                         </ul>
-                    </c:forEach>
-                    
-                   
-                    <h4>Allergien</h4>
-                     <c:forEach items="${filterAllergien}" var="allergie">
-                         <ul>
-                             <li>
-                                 <label>
-                                     <input type="checkbox" name="allergie"> ${allergie.name} </label>    
-                             </li>
-                         </ul>
-                    </c:forEach>
-                     </form>
-                   
-                        
-                        <form method="GET" class="horizontal" id="search" > 
+                        <h4>Zutaten</h4>
+                        <c:forEach items="${filterZutaten}" var="zutat">
+                            <ul>
+                                <li>
+                                    <label>
+                                        <input type="checkbox" name="zutat"> ${zutat.name} </label>    
+                                </li>
+                            </ul>
+                        </c:forEach>
+
+
+                        <h4>Allergien</h4>
+                        <c:forEach items="${filterAllergien}" var="allergie">
+                            <ul>
+                                <li>
+                                    <label>
+                                        <input type="checkbox" name="allergie"> ${allergie.name} </label>    
+                                </li>
+                            </ul>
+                        </c:forEach>
+
                         <button type="submit" name="action" value="filtern">Rezepte filtern</button>
-                        </form>
-                        
-                    
+
+                    </form>
+
+
+
+
+
+
                 </div>
             </div>
 

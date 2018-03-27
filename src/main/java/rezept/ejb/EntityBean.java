@@ -45,6 +45,7 @@ public abstract class EntityBean<Entity, EntityId> {
         return em.find(entityClass, id);
     }
     
+    /*
      public Entity findByName(String name) {
         if (name == null) {
             return null;
@@ -52,7 +53,7 @@ public abstract class EntityBean<Entity, EntityId> {
         
         return em.find(entityClass, name);
     }
-    
+    */
 
     /**
      * Auslesen aller Datensätze (Reihenfolge undefiniert)

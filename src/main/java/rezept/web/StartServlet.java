@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.NotSupportedException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import rezept.ejb.AllergieBean;
@@ -26,39 +27,38 @@ import rezept.jpa.Anlass;
 import rezept.jpa.Grundzutat;
 import rezept.jpa.Rezept;
 
-
 @WebServlet(urlPatterns = {"/index.html"})
 public class StartServlet extends HttpServlet {
-    
- 
-    
+
     @EJB
     private RezeptBean rezeptBean;
-    
-   
+
     @PersistenceContext
     EntityManager em;
 
     @Resource
     UserTransaction utx;
-    
+
+    @EJB
     AnlassBean anlassBean;
+
+    @EJB
     AllergieBean allergieBean;
+
+    @EJB
     GrundzutatBean grundzutatBean;
-    
-    
+
     //<editor-fold defaultstate="collapsed" desc="init-Methode um Filter in die DB zu schreiben, falls noch nicht vorhanden">
     @Override
     public void init(ServletConfig config) throws ServletException {
-        
+
         super.init(config);
-        
+
         System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        
-       
+
         //Anlass Tabelle befüllen/ prüfen
         List<Anlass> anlässe = em.createQuery("SELECT a FROM Anlass a ").getResultList();
-        
+
         if (anlässe.isEmpty()) {
             try {
                 utx.begin();
@@ -73,6 +73,8 @@ public class StartServlet extends HttpServlet {
                 em.persist(anlass);
                 utx.commit();
             } catch (Exception e) {
+                Logger.getLogger(StartServlet.class.getName()).log(Level.SEVERE, null, e);
+                
                 try {
                     utx.rollback();
                 } catch (IllegalStateException ex) {
@@ -84,10 +86,10 @@ public class StartServlet extends HttpServlet {
                 }
             }
         }
-        
+
         //Zutaten Tabelle befüllen/ prüfen
         List<Grundzutat> zutaten = em.createQuery("SELECT z FROM Grundzutat z ").getResultList();
-        
+
         if (zutaten.isEmpty()) {
             try {
                 utx.begin();
@@ -102,6 +104,8 @@ public class StartServlet extends HttpServlet {
                 em.persist(zutat);
                 utx.commit();
             } catch (Exception e) {
+                Logger.getLogger(StartServlet.class.getName()).log(Level.SEVERE, null, e);
+                
                 try {
                     utx.rollback();
                 } catch (IllegalStateException ex) {
@@ -112,13 +116,12 @@ public class StartServlet extends HttpServlet {
                     Logger.getLogger(StartServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            
-            
+
         }
-        
+
         //Allergien Tabelle befüllen/ prüfen
         List<Allergie> allergien = em.createQuery("SELECT a FROM Allergie a ").getResultList();
-        
+
         if (allergien.isEmpty()) {
             try {
                 utx.begin();
@@ -131,6 +134,8 @@ public class StartServlet extends HttpServlet {
                 em.persist(allergie);
                 utx.commit();
             } catch (Exception e) {
+                Logger.getLogger(StartServlet.class.getName()).log(Level.SEVERE, null, e);
+                
                 try {
                     utx.rollback();
                 } catch (IllegalStateException ex) {
@@ -141,28 +146,68 @@ public class StartServlet extends HttpServlet {
                     Logger.getLogger(StartServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            
-            
+
         }
-        
-        
+
         //Rezept Tabelle prüfen 
-         List<Rezept> rezepte = em.createQuery("SELECT r FROM Rezept r ").getResultList();
-        
-        if(rezepte.isEmpty()){
-             try {
+        List<Rezept> rezepte = em.createQuery("SELECT r FROM Rezept r ").getResultList();
+
+        if (rezepte.isEmpty()) {
+
+            try {
                 utx.begin();
                 Rezept rezept;
-                rezept = new Rezept("Lasagne", "Man nehme...", "mittel", 30,  "Tolles Bild");
+                
+                //Lasagne
+                rezept = new Rezept("Lasagne", "Man nehme...", "mittel", 30, "Tolles Bild");
                 Anlass abendessen = this.anlassBean.findByName("Abendessen");
                 rezept.getAnlässe().add(abendessen);
+                abendessen.getRezepten().add(rezept);
                 Grundzutat eier = this.grundzutatBean.findByName("Eier");
                 rezept.getGrundzutaten().add(eier);
+                eier.getRezepten().add(rezept);
                 Grundzutat nudeln = this.grundzutatBean.findByName("Nudeln");
                 rezept.getGrundzutaten().add(nudeln);
+                nudeln.getRezepten().add(rezept);
+                
+                //Spätzle
+                rezept = new Rezept("Spätzle", "Man nehme...", "mittel", 30, "Tolles Bild");
+                Anlass abendessen1 = this.anlassBean.findByName("Abendessen");
+                rezept.getAnlässe().add(abendessen1);
+                abendessen1.getRezepten().add(rezept);
+                Grundzutat eier1 = this.grundzutatBean.findByName("Eier");
+                rezept.getGrundzutaten().add(eier1);
+                eier1.getRezepten().add(rezept);
+                Grundzutat kartoffeln = this.grundzutatBean.findByName("Kartoffeln");
+                rezept.getGrundzutaten().add(kartoffeln);
+                Allergie weizen = this.allergieBean.findByName("Weizen");
+                weizen.getRezepten().add(rezept);
+                
+                
+                //Tortilla
+                rezept = new Rezept("Tortilla", "Man nehme...", "mittel", 30, "Tolles Bild");
+                Anlass abendessen2 = this.anlassBean.findByName("Abendessen");
+                rezept.getAnlässe().add(abendessen2);
+                abendessen2.getRezepten().add(rezept);
+                Grundzutat tomate = this.grundzutatBean.findByName("Tomaten");
+                rezept.getGrundzutaten().add(tomate);
+                tomate.getRezepten().add(rezept);
+                Grundzutat eier2 = this.grundzutatBean.findByName("Eier");
+                rezept.getGrundzutaten().add(eier2);
+                Allergie gluten = this.allergieBean.findByName("Gluten");
+                gluten.getRezepten().add(rezept);
+                
+                
+                
+                
+                
+                
+                
                 em.persist(rezept);
                 utx.commit();
             } catch (Exception e) {
+                Logger.getLogger(StartServlet.class.getName()).log(Level.SEVERE, null, e);
+                
                 try {
                     utx.rollback();
                 } catch (IllegalStateException ex) {
@@ -174,60 +219,48 @@ public class StartServlet extends HttpServlet {
                 }
             }
         }
-        
-        
+
     }
     //</editor-fold>
-    
-    
-    
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws IOException, ServletException {
-        
-       
-        
-       
+            throws IOException, ServletException {
+
         //Zuerst Fall-Unterscheidung ob der "Rezepte filtern" oder "Rezepte suchen"-Button gedrückt wurde oder keines von beidem
         request.setCharacterEncoding("utf-8");
 
         String action = request.getParameter("action");
 
         if (action == null || action.equals("")) {
-            action="";
+            action = "";
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/startseite.jsp");
             dispatcher.forward(request, response);
-        
-            
+
         }
-        
-        
+
         //Button "Rezepte suchen" wurde gedrückt
         if (action.equals("suchen")) {
-            
+
             //<editor-fold defaultstate="collapsed" desc="Inhalt wenn Button "suchen" gedrückt wurde">
             //Suchparameter aus der URL lesen und gesetzte Filter identifizieren!
             String searchText = request.getParameter("search_text");
-            
+
             List<Rezept> rezepte = this.rezeptBean.search(searchText);
             request.setAttribute("rezept", rezepte);
-            
+
             //muss noch angeglichen werden in der JSP
-            
             //An die JSP weiterleiten:
             request.getRequestDispatcher("/WEB-INF/app/startseite.jsp").forward(request, response);
-            
-            
+
         }
 //</editor-fold>
-        
-        
+
         //Button "Rezepte filtern" wurde gedrückt
         if (action.equals("filtern")) {
             //<editor-fold defaultstate="collapsed" desc="Inhalt wenn Button "filtern" gedrückt wurd">
             //Boolean-Werte für einzelne Filterelemente erstellen
-            
-            
+
             // auf anderen Servlet verweisen
             response.sendRedirect("/Rezept/suche");
             /*
@@ -340,22 +373,13 @@ public class StartServlet extends HttpServlet {
                   
             List<Rezept> rezepte = this.rezeptBean.searchByFilters(frühstück, brunch, mittagessen, abendessen, eier, nudeln, kartoffeln, tomaten, weizen, gluten, laktose);
             request.setAttribute("rezepte", rezepte);
-            */
+             */
             // Anfrage an die JSP weiterleiten
             //request.getRequestDispatcher("/WEB-INF/app/startseite.jsp").forward(request, response);
-            
-            
+
         }
 //</editor-fold>
-        
-        
-  
-   
-        }
 
- 
-        
     }
-    
 
-   
+}
