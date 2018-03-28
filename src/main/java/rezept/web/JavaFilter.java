@@ -37,9 +37,9 @@ public class JavaFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         
-        List<Anlass> anlässe = em.createQuery("SELECT a FROM Anlass a").getResultList();
-        List<Grundzutat> zutaten = em.createQuery("SELECT z FROM Grundzutat z").getResultList();
-        List<Allergie> allergien = em.createQuery("SELECT a FROM Allergie a ").getResultList();
+        List<Anlass> anlässe = em.createQuery("SELECT a FROM Anlass a ORDER BY a.id ASC").getResultList();
+        List<Grundzutat> zutaten = em.createQuery("SELECT z FROM Grundzutat z ORDER BY z.id ASC").getResultList();
+        List<Allergie> allergien = em.createQuery("SELECT a FROM Allergie a ORDER BY a.id ASC").getResultList();
         
         request.setAttribute("filterAnlässe", anlässe);
         request.setAttribute("filterZutaten", zutaten);

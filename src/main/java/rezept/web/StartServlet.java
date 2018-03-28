@@ -202,7 +202,6 @@ public class StartServlet extends HttpServlet {
                 
                 
                 
-                
                 em.persist(rezept);
                 utx.commit();
             } catch (Exception e) {
@@ -258,127 +257,19 @@ public class StartServlet extends HttpServlet {
 
         //Button "Rezepte filtern" wurde gedrückt
         if (action.equals("filtern")) {
+            
             //<editor-fold defaultstate="collapsed" desc="Inhalt wenn Button "filtern" gedrückt wurd">
-            //Boolean-Werte für einzelne Filterelemente erstellen
-
+            
             // auf anderen Servlet verweisen
-            response.sendRedirect("/Rezept/suche");
-            /*
-            //Anlass:
-            Anlass frühstück = null;
-            Anlass brunch = null;
-            Anlass mittagessen = null;
-            Anlass abendessen = null;
-            
-            //Zutaten:
-            Grundzutat eier = null;
-            Grundzutat nudeln = null;
-            Grundzutat kartoffeln = null;
-            Grundzutat tomaten = null;
-            
-            //Allergien:
-            Allergie weizen = null;
-            Allergie gluten = null;
-            Allergie laktose = null;
-            
-            
-            //Anlass, Zuzat, Allergie Objekte erstellen, sind vorerst noch leer
-            // Dann die Listen holen und durchgehen und schauen ob Element != null ist 
-            // wenn Element != null ist wird das Element.name geprüft und mit Strings wie z.B. Frühstück verglichen
-            //wenn Element dann z.B. Frühstück ist wird dem Frühstück Anlass Objekt, dass wir oben erstellt haben, die Werte dieses 
-            // Checkbox-Element gegeben
-            //Die Parameter werden dann der suche-Methode übergeben...
-            
-            //Anlässe prüfen
-            List anlässe = (List) request.getSession().getAttribute("filterAnlässe");
-            
-            Iterator<Anlass> iter = anlässe.iterator();
-                  if (iter.hasNext()) {
-                    Anlass anlass = iter.next();
-                        if(anlass != null) {
-                            if (anlass.getName() == "Frühstück") {
-                                frühstück = anlass;
-                            }
-                            
-                             if (anlass.getName() =="Brunch") {
-                                brunch = anlass;
-                            }
-                             
-                             if (anlass.getName() =="Frühstück") {
-                                mittagessen = anlass;
-                            }
-                             
-                              if (anlass.getName() =="Frühstück") {
-                                abendessen = anlass;
-                            }
-                            
-                        }
-                        
-                 }
-                  
-                  
-                
-                  
-            //Zutaten prüfen
-            List zutaten = (List) request.getSession().getAttribute("filterZutaten");
-            
-            Iterator<Grundzutat> iter1 = zutaten.iterator();
-                  if (iter1.hasNext()) {
-                    Grundzutat zutat = iter1.next();
-                        if(zutat != null) {
-                            if (zutat.getName() == "Tomaten") {
-                                tomaten = zutat;
-                            }
-                            
-                             if (zutat.getName() =="Kartoffeln") {
-                                kartoffeln = zutat;
-                            }
-                             
-                             if (zutat.getName() =="Eier") {
-                                eier = zutat;
-                            }
-                             
-                              if (zutat.getName() =="Nudeln") {
-                                nudeln = zutat;
-                            }
-                            
-                        }
-                        
-                 }
-
-                 //Anlässe prüfen
-            List allergien = (List) request.getSession().getAttribute("filterAllergien");
-            
-            Iterator<Allergie> iter2 = allergien.iterator();
-                  if (iter2.hasNext()) {
-                    Allergie allergie = iter2.next();
-                        if(allergie != null) {
-                            if (allergie.getName() == "Weizen") {
-                                weizen = allergie;
-                            }
-                            
-                             if (allergie.getName() =="Gluten") {
-                                gluten = allergie;
-                            }
-                             
-                             if (allergie.getName() =="Laktose") {
-                                laktose = allergie;
-                            }
-                             
-                            
-                        }
-                        
-                 }
-                  
-                  
-            List<Rezept> rezepte = this.rezeptBean.searchByFilters(frühstück, brunch, mittagessen, abendessen, eier, nudeln, kartoffeln, tomaten, weizen, gluten, laktose);
-            request.setAttribute("rezepte", rezepte);
-             */
+           // response.sendRedirect("/suche");
+            /*RequestDispatcher dispatcher = request.getRequestDispatcher("/Rezept/suche");
+            dispatcher.forward(request, response);
+            */
             // Anfrage an die JSP weiterleiten
             //request.getRequestDispatcher("/WEB-INF/app/startseite.jsp").forward(request, response);
 
         }
-//</editor-fold>
+            //</editor-fold>
 
     }
 

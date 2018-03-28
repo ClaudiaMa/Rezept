@@ -6,6 +6,8 @@
 package rezept.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,7 +45,9 @@ public class DetailansichtServlet extends HttpServlet {
             //HttpSession session = request.getSession();
 
             Rezept rezept = this.getRequestedRezept(request);
-            request.setAttribute("rezept", rezept);
+            List<Rezept> rezepte = new ArrayList<Rezept>();
+            rezepte.add(rezept);
+            request.setAttribute("rezepte", rezepte);
         
         
             // Anfrage an eine JSP weiterleiten, um damit den HTML-Code

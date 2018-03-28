@@ -25,9 +25,9 @@
 
     </head>
     <body>
-        <div class="row">
+        <div class="row" id="wrapper">
 
-            <div class="col-3 left">
+            <div class="col-xs-6 col-md-4">
                 <div class="container" id="container2" > 
                     <h3 id="Titel">Topfschlag</h3
 
@@ -84,7 +84,7 @@
                 </div>
             </div>
 
-            <div class="col-9">
+            <div class="col-xs-12 col-sm6 col-md-8">
                 <div class="container" id="conatiner3">                         
                     <main>   
                         <jsp:invoke fragment="content"/>

@@ -14,7 +14,8 @@
                 
                     
                     <!-- kann man Schleife auch weglassen??-->
-                    <c:forEach items="${rezept}" var="rezept">
+                    
+                    <c:forEach items="${rezepte}" var="rezept">
                         <div class="col-md-12">
                         <tr>
                             

@@ -15,7 +15,7 @@
                     Es wurden noch keine Rezepte gefunden. 🐈
                 </p>
             </c:when>
-            <c:otherwise> 
+            <c:otherwise>
              
                 <div class="row">
                     <c:forEach items="${rezepte}" var="rezept">

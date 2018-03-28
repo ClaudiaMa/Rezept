@@ -40,6 +40,11 @@ public class SuchServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse repsonse)
             throws IOException, ServletException {
+         request.setCharacterEncoding("utf-8");
+
+        String action = request.getParameter("action");
+
+        if (action.equals("filtern")) {
     
         List<Anlass> anlaesse = new ArrayList<>();
         List<Grundzutat> grundzutaten = new ArrayList<>();
@@ -105,6 +110,8 @@ public class SuchServlet extends HttpServlet {
         // Suchergebnis anzeigen
         request.setAttribute("rezepte", rezepte);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/startseite.jsp");
+        dispatcher.forward(request, repsonse);
         //war vorher suchseite.jsp
+    }
     }
 }
