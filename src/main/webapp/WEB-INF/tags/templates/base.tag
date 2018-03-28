@@ -13,14 +13,19 @@
         <meta charset="utf-8" />
         <title>Topfschlag</title>
 
+       
         <!-- Bootstrap-->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 
+       
+       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link type="text/css" rel="stylesheet" media="screen" href="css/style.css" />
 
         <link rel="stylesheet" href="css/style.css"/>
+
 
 
     </head>
@@ -29,7 +34,7 @@
 
             <div class="col-xs-6 col-md-4">
                 <div class="container" id="container2" > 
-                    <h3 id="Titel">Topfschlag</h3
+                    <h3 id="Titel">Topfschlag</h3>
 
 
                     <form method="GET">                        

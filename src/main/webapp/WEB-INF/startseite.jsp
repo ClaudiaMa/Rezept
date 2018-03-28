@@ -12,14 +12,14 @@
             <c:choose>
             <c:when test="${empty rezepte}">
                 <p>
-                    Es wurden noch keine Rezepte gefunden. 🐈
+                    Es wurden noch keine Rezepte gefunden. 
                 </p>
             </c:when>
             <c:otherwise>
              
                 <div class="row">
                     <c:forEach items="${rezepte}" var="rezept">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                         <tr>
                             
                             <h4>
@@ -27,6 +27,9 @@
                                     <c:out value="${rezept.rezeptname}"/>
                                 </a>
                             </h4>
+                        
+                        <img id="Rezeptbild" src="Bild.jpg"/>
+                        
                             <td>
                             <p name="rezept_dauer">Dauer:
                                 <c:out value="${rezept.dauer}"/> 
