@@ -6,44 +6,45 @@
 
 
 <template:base>
-    
+
     <jsp:attribute name="content">
         <body>
-           
-                    
-                    <c:forEach items="${rezepte}" var="rezept">
-                        <div class="col-md-12">
+
+            <div class="row">
+                <c:forEach items="${rezepte}" var="rezept">
+                    <div class="col-md-12">
                         <tr>
-                            
-                            <h4>
-                                <!-- eventuelle a href weglassen und nur c:out --> 
-                                <a href="<c:url value="/detailansicht/${rezept.id}/"/>">
-                                    <c:out value="${rezept.rezeptname}"/>
-                                </a>
-                            </h4>
-                            <td>
+
+                        <h4>
+
+                            <c:out value="${rezept.rezeptname}"/>
+
+                        </h4>
+                        
+                                                  
+                        <td>
                             <p name="rezept_dauer">Dauer:
                                 <c:out value="${rezept.dauer}"/> 
                             </p>
-                            </td>
-                            <td>
+                        </td>
+                        <td>
                             <p name="rezept_aufwand">Aufwand:
                                 <c:out value="${rezept.aufwand}"/>
                             </p>
-                            </td>
-                             <td>
+                        </td>
+                        <td>
                             <p name="rezept_rezeptbeschreibung">Rezeptbeschreibung:
                                 <c:out value="${rezept.rezeptbeschreibung}"/>
                             </p>
-                            </td>
-                            
-                            
-                            
+                        </td>
+
+
+
                         </tr>
-                        </div>
-                    </c:forEach>
-                
-           
+                    </div>
+                </c:forEach>
+            </div>
+
         </body>
     </jsp:attribute>
 
