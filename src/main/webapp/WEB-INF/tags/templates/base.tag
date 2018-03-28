@@ -41,37 +41,46 @@
                     </form>
 
                     <form method="GET" action="suche">
+                        
                         <h4>Anlass</h4>
+                        <fieldset>
                         <c:forEach items="${filterAnlässe}" var="anlass">
                             <ul>
                                 <li>
                                     <label>
-                                        <input type="checkbox" name="anlass"> ${anlass.name} </label>  
+                                        
+                                        <input type="checkbox" name="anlass" value="${anlass.id}" id="check1"> ${anlass.name} </label>
                                 </li>
                             </ul>
                         </c:forEach>
-
+                        </fieldset>
+                        
+                        
                         <h4>Zutaten</h4>
+                        <fieldset>
                         <c:forEach items="${filterZutaten}" var="zutat">
                             <ul>
                                 <li>
                                     <label>
-                                        <input type="checkbox" name="zutat"> ${zutat.name} </label>    
+                                        <input type="checkbox" name="zutat" value="${zutat.id}" id="check1"> ${zutat.name} </label>
+                                         
                                 </li>
                             </ul>
                         </c:forEach>
-
+                        </fieldset>
 
                         <h4>Allergien</h4>
+                        <fieldset>
                         <c:forEach items="${filterAllergien}" var="allergie">
                             <ul>
                                 <li>
                                     <label>
-                                        <input type="checkbox" name="allergie"> ${allergie.name} </label>    
+                                        <input type="checkbox" name="allergie" value="${allergie.id}" id="check1"> ${allergie.name} </label>
+                                        
                                 </li>
                             </ul>
                         </c:forEach>
-
+                        </fieldset>
                         <button type="submit" name="action" value="filtern">Rezepte filtern</button>
 
                     </form>

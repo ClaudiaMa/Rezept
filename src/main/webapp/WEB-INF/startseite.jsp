@@ -34,7 +34,7 @@
                             </td>
                             <td>
                             <p name="rezept_aufwand">Aufwand:
-                                <c:out value="${rezept.aufwand}}"/>
+                                <c:out value="${rezept.aufwand}"/>
                             </p>
                             </td>
                             

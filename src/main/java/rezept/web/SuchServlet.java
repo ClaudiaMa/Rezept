@@ -43,6 +43,20 @@ public class SuchServlet extends HttpServlet {
          request.setCharacterEncoding("utf-8");
 
         String action = request.getParameter("action");
+        
+         if (action.equals("suchen")) {
+
+            String searchText = request.getParameter("search_text");
+
+            List<Rezept> rezepte = this.rezeptBean.search(searchText);
+            request.setAttribute("rezepte", rezepte);
+
+            //An die JSP weiterleiten:
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/startseite.jsp");
+            dispatcher.forward(request, repsonse);
+           
+
+        }
 
         if (action.equals("filtern")) {
     
@@ -51,8 +65,10 @@ public class SuchServlet extends HttpServlet {
         List<Allergie> allergien = new ArrayList<>();
         
         String[] anlassCheckboxen = request.getParameterValues("anlass");
-        String[] grundzutatCheckboxen = request.getParameterValues("grundzutat");
+        String[] grundzutatCheckboxen = request.getParameterValues("zutat");
         String[] allergieCheckboxen = request.getParameterValues("allergie");
+        
+        System.out.println("Funktioniert das String-Feld?" + anlassCheckboxen + "LLLLLLLLLLL");
         
         // Angekreuzte Anlässe ermitteln
         if (anlassCheckboxen != null) {
@@ -103,7 +119,9 @@ public class SuchServlet extends HttpServlet {
             }
         }
         
-        
+        System.out.println("Steht in den Anlass Feldern was drin??????????" + anlaesse.toString());
+         System.out.println("Steht in den Zutaten Feldern was drin??????????" + grundzutaten.toString());
+          System.out.println("Steht in den Allergien Feldern was drin??????????" + allergien.toString());
         // Suche ausführen
         List<Rezept> rezepte = this.rezeptBean.searchByFilters(anlaesse, grundzutaten, allergien);
         

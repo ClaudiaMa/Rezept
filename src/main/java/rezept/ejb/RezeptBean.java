@@ -76,6 +76,7 @@ public class RezeptBean extends EntityBean<Rezept, Long> {
     String select = "SELECT r FROM Rezept r";
     String where = "";
 
+    
     Map<String, Object> parameters = new HashMap<>();
     int i = 0;
 

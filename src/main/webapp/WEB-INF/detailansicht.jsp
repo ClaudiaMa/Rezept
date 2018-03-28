@@ -10,10 +10,6 @@
     <jsp:attribute name="content">
         <body>
            
-             
-                
-                    
-                    <!-- kann man Schleife auch weglassen??-->
                     
                     <c:forEach items="${rezepte}" var="rezept">
                         <div class="col-md-12">
@@ -32,12 +28,12 @@
                             </td>
                             <td>
                             <p name="rezept_aufwand">Aufwand:
-                                <c:out value="${rezept.aufwand}}"/>
+                                <c:out value="${rezept.aufwand}"/>
                             </p>
                             </td>
                              <td>
                             <p name="rezept_rezeptbeschreibung">Rezeptbeschreibung:
-                                <c:out value="${rezept.rezeptbeschreibung}}"/>
+                                <c:out value="${rezept.rezeptbeschreibung}"/>
                             </p>
                             </td>
                             
