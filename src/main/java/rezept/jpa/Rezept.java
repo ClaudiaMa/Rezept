@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.TableGenerator;
@@ -25,13 +25,13 @@ public class Rezept implements Serializable {
     @TableGenerator(name="rezept_id", initialValue = 0, allocationSize = 50)
     private Long id;
     
-    @ManyToMany(mappedBy="rezepten", cascade = {CascadeType.PERSIST})
+    @ManyToMany(mappedBy="rezepten", cascade = {CascadeType.PERSIST}, fetch=FetchType.EAGER)
     List<Allergie> allergien = new ArrayList<>();
     
-    @ManyToMany(mappedBy="rezepten", cascade = {CascadeType.PERSIST})
+    @ManyToMany(mappedBy="rezepten", cascade = {CascadeType.PERSIST}, fetch=FetchType.EAGER)
     List<Anlass> anlässe = new ArrayList<>();
     
-    @ManyToMany(mappedBy="rezepten", cascade = {CascadeType.PERSIST})
+    @ManyToMany(mappedBy="rezepten", cascade = {CascadeType.PERSIST}, fetch=FetchType.EAGER)
     List<Grundzutat> grundzutaten = new ArrayList<>();
     
     

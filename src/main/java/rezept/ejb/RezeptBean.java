@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package rezept.ejb;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,12 +17,10 @@ import rezept.jpa.Allergie;
 import rezept.jpa.Anlass;
 import rezept.jpa.Grundzutat;
 import rezept.jpa.Rezept;
-
 /**
  *
  * @author Claudia
  */
-
 @Stateless
 public class RezeptBean extends EntityBean<Rezept, Long> {
     
@@ -46,7 +44,7 @@ public class RezeptBean extends EntityBean<Rezept, Long> {
         
         // WHERE r.rezeptname LIKE :search
         if (search != null && !search.trim().isEmpty()) {
-            //query.where(cb.like(from.get("rezeptbeschreibung"), "%" + search + "%"));
+            query.where(cb.equal(from.get("rezeptbeschreibung"), search));
         }
        
         return em.createQuery(query).getResultList();
@@ -69,63 +67,163 @@ public class RezeptBean extends EntityBean<Rezept, Long> {
             return true;
         }
     }
+    
+     public boolean rezeptOk (String search) {
+        String stringRegex = ".*(false).*";
+        
+        if ( search.matches(stringRegex)) {
+            return false;
+        }
+        
+        else {
+            return true;
+        }
+    }
+     
+    
+    
     //</editor-fold>
      
     public List<Rezept> searchByFilters(List<Anlass> anlaesse, List<Grundzutat> grundzutaten, List<Allergie> allergien) {
-    // WHERE-Bedingungen für die Filteroptionen zusammenbauen
-    String select = "SELECT r FROM Rezept r";
-    String where = "";
-
-    
-    Map<String, Object> parameters = new HashMap<>();
-    int i = 0;
-
-    for (Anlass anlass : anlaesse) {
-        i++;
-        parameters.put("" + i, anlass);
-
-        if (!where.isEmpty()) {
-            where += " AND ";
-        }
-
-        where += ":" + i + " MEMBER OF r.anlässe";
+        
+        List<Rezept> rezepte = em.createQuery("SELECT r FROM Rezept r").getResultList();
+        System.out.println("FUNKTIONIERT DER SELECT?????????????????????????????????????" + rezepte.toString());
+        
+        //for(int i = 0; i < rezept.size(); ++i) {}
+        
+            //String Array
+            
+           
+            
+            List<Rezept> ergebnisListe = new ArrayList<Rezept>();
+            
+            for ( Rezept rezept : rezepte) {
+                System.out.println("Er geht in die erste Rezept-for Schleife rein!  Das gerade behandelte Rezept lautet: " + rezept.getRezeptname());
+                String enthaeltAnlaesse  = "";
+                String enthaeltAllergien = "";
+                String enthaeltGrundzutaten = "";
+                
+                List<Allergie> allergienVonRezept = rezept.getAllergien();
+                List<Anlass> anlässeVonRezept = rezept.getAnlässe();
+                List<Grundzutat> grundzutatVonRezept = rezept.getGrundzutaten();
+                 
+                System.out.println("Das Rezept: " + rezept.getRezeptname() + " hat folgende Anlässe:   " + anlässeVonRezept );
+                 System.out.println("Das Rezept:   " + rezept.getRezeptname() + "  hat folgende Allergien: " + allergienVonRezept );
+                  System.out.println("Das Rezept:   " + rezept.getRezeptname() + " hat folgende Grundzutaten:   "+ grundzutatVonRezept );
+               
+                 
+                 
+                 
+                //Anlässe durchsuchen
+                if (!anlaesse.isEmpty()) {
+                    for ( Anlass anlass : anlaesse) {
+                         System.out.println(" Es wurden Anlässe angehakt und zwar die folgenden:  " + anlass.getName());
+                         
+                         String anlassWarEnthalten = "";
+                         for ( Anlass a: anlässeVonRezept) {
+                             if ( a.getName().equals(anlass.getName())) {
+                                 System.out.println("Der angehakte Anlass "+ anlass.getName() + "  ist auch in der Anlassliste von Rezept enthalten!");
+                                  anlassWarEnthalten = "ja";
+                                  break;
+                             }
+                             else {
+                                 System.out.println("Der angehakte Anlass  " + anlass.getName() + " ist nicht in der Anlassliste von Rezept enthalten"); 
+                                 anlassWarEnthalten = "nein";
+                             }
+                         }                        
+                         System.out.println("Der angehakte Anlass: " + anlass.getName() + " war in der AllergieListe von Rezept enthalten?: " + anlassWarEnthalten);
+                         
+                       if ( anlassWarEnthalten.equals("ja")) {
+                           enthaeltAnlaesse = enthaeltAnlaesse + "true";
+                       }
+                       else {
+                           enthaeltAnlaesse = enthaeltAnlaesse + "false";
+                       }
+                    }
+                    }
+                System.out.println("Der String enthaeltAnlaesse sieht so aus: " + enthaeltAnlaesse);
+                
+                
+                //Allergien durchsuchen
+                 if (!allergien.isEmpty()) {
+                    for ( Allergie allergie : allergien) {
+                         System.out.println(" Es wurden Allergien angehakt und zwar die folgenden:  " + allergie.getName());
+                         
+                         String allergieWarEnthalten = "";
+                         for ( Allergie a: allergienVonRezept) {
+                             if ( a.getName().equals(allergie.getName())) {
+                                 System.out.println("Der angehakte Allergie "+ allergie.getName() + "  ist auch in der Allergieliste von Rezept enthalten!");
+                                  allergieWarEnthalten = "ja";
+                                  break;
+                             }
+                             else {
+                                 System.out.println("Der angehakte Allergie  " + allergie.getName() + " ist nicht in der Allergieliste von Rezept enthalten"); 
+                                 allergieWarEnthalten = "nein";
+                             }
+                         }                        
+                         System.out.println("Die angehakte Allergie: " + allergie.getName() + " war in der AllergieListe von Rezept enthalten?: " + allergieWarEnthalten);
+                         
+                       if ( allergieWarEnthalten.equals("ja")) {
+                           enthaeltAllergien = enthaeltAllergien + "true";
+                       }
+                       else {
+                           enthaeltAllergien = enthaeltAllergien + "false";
+                       }
+                    }
+                    }
+                System.out.println("Der String enthaeltAllergie sieht so aus: " + enthaeltAllergien);
+                
+                //Grundzutaten untersuchen
+                if (!grundzutaten.isEmpty()) {
+                    for ( Grundzutat grundzutat : grundzutaten) {
+                         System.out.println(" Es wurden Zutaten angehakt und zwar die folgenden:  " + grundzutat.getName());
+                         
+                         String grundzutatWarEnthalten = "";
+                         for ( Grundzutat g: grundzutatVonRezept) {
+                             if ( g.getName().equals(grundzutat.getName())) {
+                                 System.out.println("Die angehakte Zutat "+ grundzutat.getName() + "  ist auch in der Zutatenliste von Rezept enthalten!");
+                                  grundzutatWarEnthalten = "ja";
+                                  break;
+                             }
+                             else {
+                                 System.out.println("Die angehakte Zutat  " + grundzutat.getName() + " ist nicht in der Zutatenliste von Rezept enthalten"); 
+                                 grundzutatWarEnthalten = "nein";
+                             }
+                         }                        
+                         System.out.println("Die angehakte Zutat: " + grundzutat.getName() + " war in der Zutatenliste von Rezept enthalten?: " + grundzutatWarEnthalten);
+                         
+                       if ( grundzutatWarEnthalten.equals("ja")) {
+                           enthaeltGrundzutaten = enthaeltGrundzutaten + "true";
+                       }
+                       else {
+                           enthaeltGrundzutaten = enthaeltGrundzutaten + "false";
+                       }
+                    }
+                    }
+                System.out.println("Der String enthaeltGrundzutaten sieht so aus: " + enthaeltGrundzutaten);
+                
+                boolean rezeptOkAnlaesse = rezeptOk(enthaeltAnlaesse);
+                System.out.println("Der erste boolean:  " + rezeptOkAnlaesse);
+                boolean rezeptOkAllergien = rezeptOk(enthaeltAllergien);
+                System.out.println("Der zweite boolean: " + rezeptOkAllergien);
+                boolean rezeptOkZutate = rezeptOk(enthaeltGrundzutaten);
+                System.out.println("Der dritte boolean: " + rezeptOkZutate);
+              
+                
+                if ( rezeptOkAnlaesse == true && rezeptOkAllergien == true && rezeptOkZutate == true){
+                    Long id = rezept.getId();
+                    ergebnisListe.add(this.findById(id));
+                    System.out.println("Alle Eigenschaften treffen auf das Rezept zu: " + rezept.getRezeptname() + "Dieses wird jz in der DB gesucht");
+                }
+            }
+                
+            
+            return ergebnisListe;
+       
+       
     }
-    
-    for (Grundzutat grundzutat : grundzutaten) {
-        i++;
-        parameters.put("" + i, grundzutat);
-
-        if (!where.isEmpty()) {
-            where += " AND ";
-        }
-
-        where += ":" + i + " MEMBER OF r.grundzutaten";
-    }
-    
-    for (Allergie allergie : allergien) {
-        i++;
-        parameters.put("" + i, allergie);
-
-        if (!where.isEmpty()) {
-            where += " AND ";
-        }
-
-        where += ":" + i + " MEMBER OF r.allergien";
-    }
-
-    // Finalen SELECT-String zusammenbauen und Suche ausführen
-    if (!where.isEmpty()) {
-        select += " WHERE " + where;
-    }
-
-    Query query = em.createQuery(select);
-
-    for (String key : parameters.keySet()) {
-        query.setParameter(key, parameters.get(key));
-    }
-
-    return query.getResultList();
+  
 }
+            
         
     
-}

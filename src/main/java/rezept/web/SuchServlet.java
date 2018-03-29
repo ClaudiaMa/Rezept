@@ -67,8 +67,7 @@ public class SuchServlet extends HttpServlet {
         String[] anlassCheckboxen = request.getParameterValues("anlass");
         String[] grundzutatCheckboxen = request.getParameterValues("zutat");
         String[] allergieCheckboxen = request.getParameterValues("allergie");
-        
-        System.out.println("Funktioniert das String-Feld?" + anlassCheckboxen + "LLLLLLLLLLL");
+        System.out.println("Sting-Felder Inahlt, 1.anlassCheckboxen: " + anlassCheckboxen + " grundzutatCheckboxen: " + grundzutatCheckboxen + "allergieCheckboxen: " + allergieCheckboxen );
         
         // Angekreuzte Anlässe ermitteln
         if (anlassCheckboxen != null) {

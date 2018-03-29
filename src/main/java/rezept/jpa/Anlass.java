@@ -66,4 +66,5 @@ public class Anlass implements Serializable {
         this.name = name;
     }
 //</editor-fold>    
+    
 }

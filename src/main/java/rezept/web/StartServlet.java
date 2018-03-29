@@ -181,6 +181,7 @@ public class StartServlet extends HttpServlet {
                 Grundzutat kartoffeln = this.grundzutatBean.findByName("Kartoffeln");
                 rezept.getGrundzutaten().add(kartoffeln);
                 Allergie weizen = this.allergieBean.findByName("Weizen");
+                rezept.getAllergien().add(weizen);
                 weizen.getRezepten().add(rezept);
                 
                 
@@ -195,6 +196,7 @@ public class StartServlet extends HttpServlet {
                 Grundzutat eier2 = this.grundzutatBean.findByName("Eier");
                 rezept.getGrundzutaten().add(eier2);
                 Allergie gluten = this.allergieBean.findByName("Gluten");
+                rezept.getAllergien().add(gluten);
                 gluten.getRezepten().add(rezept);
                 
                 
