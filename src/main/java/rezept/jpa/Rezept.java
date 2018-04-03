@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.TableGenerator;
 
@@ -36,7 +37,10 @@ public class Rezept implements Serializable {
     
     
     private String rezeptname = "";
+    
+    @Lob
     private String rezeptbeschreibung = "";
+    
     private String aufwand = "";
     private int dauer = 0;
     private String bild = ""; // ??

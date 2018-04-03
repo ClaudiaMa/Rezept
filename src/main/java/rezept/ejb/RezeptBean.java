@@ -30,30 +30,26 @@ public class RezeptBean extends EntityBean<Rezept, Long> {
     
     //Methode um Rezepte aus der Suchleiste zu finden
     //<editor-fold defaultstate="collapsed" desc="Suchen anhand Text in der Suchleiste">
-    public List<Rezept> search(String search) {
-        
+     public List<Rezept> search(String search) {
+        List<Rezept> rezepte = em.createQuery("SELECT r FROM Rezept r").getResultList();
         boolean stringIsValid = isValid(search);
-        if (stringIsValid == true ) {
-        // Hilfsobjekt zum Bauen des Query
-        CriteriaBuilder cb = this.em.getCriteriaBuilder();
         
-        // SELECT r FROM Rezept r
-        CriteriaQuery<Rezept> query = cb.createQuery(Rezept.class);
-        Root<Rezept> from = query.from(Rezept.class);
-        query.select(from);
-        
-        // WHERE r.rezeptname LIKE :search
-        if (search != null && !search.trim().isEmpty()) {
-            query.where(cb.equal(from.get("rezeptbeschreibung"), search));
-        }
-       
-        return em.createQuery(query).getResultList();
-        }
-        
-        else {
+        if (stringIsValid == true) {
+            // Hilfsobjekt zum Bauen des Query
+            CriteriaBuilder cb = this.em.getCriteriaBuilder();
+            // SELECT r FROM Rezept r
+            CriteriaQuery<Rezept> query = cb.createQuery(Rezept.class);
+            Root<Rezept> from = query.from(Rezept.class);
+            query.select(from);
+            // WHERE r.rezeptname LIKE :search
+            if (search != null && !search.trim().isEmpty()) {
+                rezepte = em.createQuery("SELECT r FROM Rezept r WHERE r.rezeptname = '" + search + "'").getResultList();
+            }
+            return rezepte;
+        } else {
             return null;
         }
-    }
+     }
     
     public boolean isValid (String search) {
         String numberRegex = ".*[0-9].*";

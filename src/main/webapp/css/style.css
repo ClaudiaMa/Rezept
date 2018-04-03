@@ -65,6 +65,11 @@ h1, h2, h4 {
 h2 {
     color: white;
 }
+
+h5 {
+    color: green;
+    text-shadow: 0 0 1px rgba(0,0,0,0.5);
+}
 ul {
     list-style-type: none;
     padding-left: 0;

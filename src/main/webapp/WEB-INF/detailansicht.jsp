@@ -21,19 +21,22 @@
 
                         </h4>
                         
-                                                  
+                                                 
                         <td>
-                            <p name="rezept_dauer">Dauer:
-                                <c:out value="${rezept.dauer}"/> 
+                            <h5>
+                                <p name="rezept_dauer">Dauer:</h5>
+                                <c:out value="${rezept.dauer}"/> Minuten
                             </p>
                         </td>
                         <td>
-                            <p name="rezept_aufwand">Aufwand:
+                            <h5>
+                                <p name="rezept_aufwand">Aufwand:</h5>
                                 <c:out value="${rezept.aufwand}"/>
                             </p>
                         </td>
                         <td>
-                            <p name="rezept_rezeptbeschreibung">Rezeptbeschreibung:
+                            <h5>
+                                <p name="rezept_rezeptbeschreibung">Rezeptbeschreibung:</h5>
                                 <c:out value="${rezept.rezeptbeschreibung}"/>
                             </p>
                         </td>

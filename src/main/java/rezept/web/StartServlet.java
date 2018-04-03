@@ -15,7 +15,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.NotSupportedException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import rezept.ejb.AllergieBean;
@@ -159,7 +158,11 @@ public class StartServlet extends HttpServlet {
                 Rezept rezept;
                 
                 //Lasagne
-                rezept = new Rezept("Lasagne", "Man nehme...", "mittel", 30, "Tolles Bild");
+                final String LINE_BREAK = System.getProperty("line.separator");
+                rezept = new Rezept("Lasagne", ""
+                       
+                        + LINE_BREAK +
+                          " In einer gebutterten, feuerfesten Form etwas Ragout Bolognese verteilen, eine Schicht Lasagnenudeln darauf legen, die Nudelschicht wieder mit Ragu und dann mit einer Bechamelsaucenschicht bedecken.Die letzte Schicht sollte die Bechamelsauce bilden. Dick mit geriebenem Käse bestreuen, Butterflöckchen darauf setzen. Die Lasagne bei 180°C im Ofen ca. 30 - 40 Minuten überbacken, bis die Kruste goldbrau", "mittel", 30, "Tolles Bild");
                 Anlass abendessen = this.anlassBean.findByName("Abendessen");
                 rezept.getAnlässe().add(abendessen);
                 abendessen.getRezepten().add(rezept);
@@ -171,7 +174,7 @@ public class StartServlet extends HttpServlet {
                 nudeln.getRezepten().add(rezept);
                 
                 //Spätzle
-                rezept = new Rezept("Spätzle", "Man nehme...", "mittel", 30, "Tolles Bild");
+                rezept = new Rezept("Spätzle", "Man nehme...", "gering", 45, "Tolles Bild");
                 Anlass abendessen1 = this.anlassBean.findByName("Abendessen");
                 rezept.getAnlässe().add(abendessen1);
                 abendessen1.getRezepten().add(rezept);
@@ -186,7 +189,7 @@ public class StartServlet extends HttpServlet {
                 
                 
                 //Tortilla
-                rezept = new Rezept("Tortilla", "Man nehme...", "mittel", 30, "Tolles Bild");
+                rezept = new Rezept("Tortilla", "Man nehme...", "hoch", 20, "Tolles Bild");
                 Anlass abendessen2 = this.anlassBean.findByName("Abendessen");
                 rezept.getAnlässe().add(abendessen2);
                 abendessen2.getRezepten().add(rezept);
@@ -198,6 +201,8 @@ public class StartServlet extends HttpServlet {
                 Allergie gluten = this.allergieBean.findByName("Gluten");
                 rezept.getAllergien().add(gluten);
                 gluten.getRezepten().add(rezept);
+                
+                
                 
                 
                 
@@ -240,38 +245,7 @@ public class StartServlet extends HttpServlet {
 
         }
 
-        //Button "Rezepte suchen" wurde gedrückt
-        if (action.equals("suchen")) {
-
-            //<editor-fold defaultstate="collapsed" desc="Inhalt wenn Button "suchen" gedrückt wurde">
-            //Suchparameter aus der URL lesen und gesetzte Filter identifizieren!
-            String searchText = request.getParameter("search_text");
-
-            List<Rezept> rezepte = this.rezeptBean.search(searchText);
-            request.setAttribute("rezept", rezepte);
-
-            //muss noch angeglichen werden in der JSP
-            //An die JSP weiterleiten:
-            request.getRequestDispatcher("/WEB-INF/app/startseite.jsp").forward(request, response);
-
-        }
-//</editor-fold>
-
-        //Button "Rezepte filtern" wurde gedrückt
-        if (action.equals("filtern")) {
-            
-            //<editor-fold defaultstate="collapsed" desc="Inhalt wenn Button "filtern" gedrückt wurd">
-            
-            // auf anderen Servlet verweisen
-           // response.sendRedirect("/suche");
-            /*RequestDispatcher dispatcher = request.getRequestDispatcher("/Rezept/suche");
-            dispatcher.forward(request, response);
-            */
-            // Anfrage an die JSP weiterleiten
-            //request.getRequestDispatcher("/WEB-INF/app/startseite.jsp").forward(request, response);
-
-        }
-            //</editor-fold>
+        
 
     }
 
