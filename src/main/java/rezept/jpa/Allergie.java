@@ -39,7 +39,7 @@ public class Allergie implements Serializable {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Getter und Setter">
+    //<editor-fold defaultstate="collapsed" desc="Getter und Setter">
     public Long getId() {
         return id;
     }

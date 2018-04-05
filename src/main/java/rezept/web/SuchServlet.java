@@ -42,8 +42,10 @@ public class SuchServlet extends HttpServlet {
             throws IOException, ServletException {
          request.setCharacterEncoding("utf-8");
 
+         //Wert des action-Attributes in einen String speichern, um zu unterscheiden ob es sich um den "Rezept suchen" oder "Rezepte filtern" Button handelt
         String action = request.getParameter("action");
         
+        //Wenn Button "Rezept suchen" gedrückt wurde
          if (action.equals("suchen")) {
 
             String searchText = request.getParameter("search_text");
@@ -57,7 +59,8 @@ public class SuchServlet extends HttpServlet {
            
 
         }
-
+         
+        //Wenn Button "Rezept filtern" gedrückt wurde
         if (action.equals("filtern")) {
     
         List<Anlass> anlaesse = new ArrayList<>();
@@ -118,17 +121,14 @@ public class SuchServlet extends HttpServlet {
             }
         }
         
-        System.out.println("Steht in den Anlass Feldern was drin??????????" + anlaesse.toString());
-         System.out.println("Steht in den Zutaten Feldern was drin??????????" + grundzutaten.toString());
-          System.out.println("Steht in den Allergien Feldern was drin??????????" + allergien.toString());
-        // Suche ausführen
+        // Suche aufgrund gesetzter Filter ausführen
         List<Rezept> rezepte = this.rezeptBean.searchByFilters(anlaesse, grundzutaten, allergien);
         
         // Suchergebnis anzeigen
         request.setAttribute("rezepte", rezepte);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/startseite.jsp");
         dispatcher.forward(request, repsonse);
-        //war vorher suchseite.jsp
+       
     }
     }
 }

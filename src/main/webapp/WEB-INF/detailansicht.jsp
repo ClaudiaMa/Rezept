@@ -36,6 +36,12 @@
                         </td>
                         <td>
                             <h5>
+                                <p name="rezept_zutaten">Zutaten:</h5>
+                                <c:out value="${rezept.zutaten}"/>
+                            </p>
+                        </td>
+                        <td>
+                            <h5>
                                 <p name="rezept_rezeptbeschreibung">Rezeptbeschreibung:</h5>
                                 <c:out value="${rezept.rezeptbeschreibung}"/>
                             </p>

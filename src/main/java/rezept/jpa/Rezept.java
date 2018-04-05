@@ -41,18 +41,22 @@ public class Rezept implements Serializable {
     @Lob
     private String rezeptbeschreibung = "";
     
+    @Lob
+    private String zutaten ="";
+    
     private String aufwand = "";
     private int dauer = 0;
-    private String bild = ""; // ??
+    private String bild = ""; 
    
-//<editor-fold defaultstate="collapsed" desc="Konstruktoren">
+    //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
     public Rezept() {
         
     }
     
-    public Rezept(String rezeptname, String rezeptbeschreibung, String aufwand, int dauer, String bild){
+    public Rezept(String rezeptname,String zutaten, String rezeptbeschreibung, String aufwand, int dauer, String bild){
        
         this.rezeptname = rezeptname;
+        this.zutaten = zutaten;
         this.rezeptbeschreibung = rezeptbeschreibung;
         this.aufwand = aufwand;
         this.dauer = dauer;
@@ -60,7 +64,7 @@ public class Rezept implements Serializable {
     }
 //</editor-fold>
 
-//<editor-fold defaultstate="collapsed" desc="Getter und Setter">
+    //<editor-fold defaultstate="collapsed" desc="Getter und Setter">
     public Long getId() {
         return id;
     }
@@ -76,6 +80,11 @@ public class Rezept implements Serializable {
     public List<Grundzutat> getGrundzutaten() {
         return grundzutaten;
     }
+    
+    public String getZutaten() {
+        return zutaten;
+    }
+    
     
     public String getRezeptname() {
         return rezeptname;
@@ -119,6 +128,10 @@ public class Rezept implements Serializable {
     
     public void setRezeptbeschreibung(String rezeptbeschreibung) {
         this.rezeptbeschreibung = rezeptbeschreibung;
+    }
+    
+    public void setZutaten(String zutaten){
+        this.zutaten = zutaten;
     }
     
     public void setAufwand(String aufwand) {

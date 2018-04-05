@@ -46,7 +46,7 @@ public class JavaFilter implements Filter {
         request.setAttribute("filterAllergien", allergien);
         
         chain.doFilter(request, response);
-        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        
         
     }
 

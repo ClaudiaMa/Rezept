@@ -47,17 +47,16 @@ public class StartServlet extends HttpServlet {
     @EJB
     GrundzutatBean grundzutatBean;
 
-    //<editor-fold defaultstate="collapsed" desc="init-Methode um Filter in die DB zu schreiben, falls noch nicht vorhanden">
+    //<editor-fold defaultstate="collapsed" desc="init-Methode um Filter und Rezepte in die DB zu schreiben, falls noch nicht vorhanden">
     @Override
     public void init(ServletConfig config) throws ServletException {
 
         super.init(config);
 
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-
+        //<editor-fold defaultstate="collapsed" desc="Filter in DB speichern">
         //Anlass Tabelle befüllen/ prüfen
         List<Anlass> anlässe = em.createQuery("SELECT a FROM Anlass a ").getResultList();
-
+        
         if (anlässe.isEmpty()) {
             try {
                 utx.begin();
@@ -85,10 +84,10 @@ public class StartServlet extends HttpServlet {
                 }
             }
         }
-
+        
         //Zutaten Tabelle befüllen/ prüfen
         List<Grundzutat> zutaten = em.createQuery("SELECT z FROM Grundzutat z ").getResultList();
-
+        
         if (zutaten.isEmpty()) {
             try {
                 utx.begin();
@@ -115,12 +114,12 @@ public class StartServlet extends HttpServlet {
                     Logger.getLogger(StartServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
+            
         }
-
+        
         //Allergien Tabelle befüllen/ prüfen
         List<Allergie> allergien = em.createQuery("SELECT a FROM Allergie a ").getResultList();
-
+        
         if (allergien.isEmpty()) {
             try {
                 utx.begin();
@@ -145,8 +144,10 @@ public class StartServlet extends HttpServlet {
                     Logger.getLogger(StartServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
+            
         }
+//</editor-fold>
+        
 
         //Rezept Tabelle prüfen 
         List<Rezept> rezepte = em.createQuery("SELECT r FROM Rezept r ").getResultList();
@@ -158,11 +159,10 @@ public class StartServlet extends HttpServlet {
                 Rezept rezept;
                 
                 //Lasagne
-                final String LINE_BREAK = System.getProperty("line.separator");
-                rezept = new Rezept("Lasagne", ""
-                       
-                        + LINE_BREAK +
-                          " In einer gebutterten, feuerfesten Form etwas Ragout Bolognese verteilen, eine Schicht Lasagnenudeln darauf legen, die Nudelschicht wieder mit Ragu und dann mit einer Bechamelsaucenschicht bedecken.Die letzte Schicht sollte die Bechamelsauce bilden. Dick mit geriebenem Käse bestreuen, Butterflöckchen darauf setzen. Die Lasagne bei 180°C im Ofen ca. 30 - 40 Minuten überbacken, bis die Kruste goldbrau", "mittel", 30, "Tolles Bild");
+               
+                rezept = new Rezept("Lasagne", "100g Lasagneplatten, 5 Tomaten, 500g Hackfleisch, 1 Packung passierte Tomaten, 2 Paprikas, 2 Zwiebeln",
+                        "In einer gebutterten, feuerfesten Form etwas Ragout Bolognese verteilen, eine Schicht Lasagnenudeln darauf legen, die Nudelschicht wieder mit Ragu und dann mit einer Bechamelsaucenschicht bedecken.Die letzte Schicht sollte die Bechamelsauce bilden. Dick mit geriebenem Käse bestreuen, Butterflöckchen darauf setzen. Die Lasagne bei 180°C im Ofen ca. 30 - 40 Minuten überbacken, bis die Kruste goldbrau",
+                        "mittel", 30, "Tolles Bild");
                 Anlass abendessen = this.anlassBean.findByName("Abendessen");
                 rezept.getAnlässe().add(abendessen);
                 abendessen.getRezepten().add(rezept);
@@ -174,7 +174,7 @@ public class StartServlet extends HttpServlet {
                 nudeln.getRezepten().add(rezept);
                 
                 //Spätzle
-                rezept = new Rezept("Spätzle", "Man nehme...", "gering", 45, "Tolles Bild");
+                rezept = new Rezept("Spätzle","5 Eier, 500g Dinkelmehl, 100 ml Wasser", "Mehl, Eier und 100 ml Wasser in einer Schüssel mit 1 Prise Salz vermengen und mit der Hand oder einem Kochlöffel so lange schlagen, bis der Teig Blasen wirft. Den Teig durch eine Spätzlepresse portionsweise in kochendes Salzwasser drücken.", "gering", 45, "Tolles Bild");
                 Anlass abendessen1 = this.anlassBean.findByName("Abendessen");
                 rezept.getAnlässe().add(abendessen1);
                 abendessen1.getRezepten().add(rezept);
@@ -189,7 +189,9 @@ public class StartServlet extends HttpServlet {
                 
                 
                 //Tortilla
-                rezept = new Rezept("Tortilla", "Man nehme...", "hoch", 20, "Tolles Bild");
+                rezept = new Rezept("Tortilla","2 Packungen Tortilla Chips, 1 Avocado, 3 Tomaten, 200g Mais, 1 Paprika, 200g Hackfleisch", 
+                        "Kartoffeln schälen, waschen, in dünne Scheiben schneiden. Zwiebeln pellen, sehr fein würfeln. Eier mit Petersilie, Salz, Pfeffer und Milch in einer Schüssel kräftig verquirlen, über die Kartoffeln gießen. Mit einem Holzspatel gut mischen. Im heißen Ofen bei 180 Grad auf der 2. Schiene von unten 15-20 Min.",
+                        "hoch", 20, "Tolles Bild");
                 Anlass abendessen2 = this.anlassBean.findByName("Abendessen");
                 rezept.getAnlässe().add(abendessen2);
                 abendessen2.getRezepten().add(rezept);
@@ -202,7 +204,22 @@ public class StartServlet extends HttpServlet {
                 rezept.getAllergien().add(gluten);
                 gluten.getRezepten().add(rezept);
                 
-                
+                //Spaghetti Bolognese
+                rezept = new Rezept ("Spaghetti Bolognese", "500g Hackfleisch, 6 Tomaten, 2 Zwiebeln, 1 Knolle Knoblauch, 50ml Olivenöl, 1 TubeTomatenmark, 500g Spaghetti",
+                                     "In einem großen Topf den Speck und den Rosmarin in Olivenöl goldgelb anbraten. Zwiebeln und Knoblauch zugeben und 3 Minuten unter Rühren anschmoren. Dann das Hackfleisch zugeben und anbraten. Danach den Wein zugeben und die Flüssigkeit etwas reduzieren lassen. Dann den Oregano, die Möhren und alle Tomaten und n.B. etwas Tomatenmark zugeben. Mit den Gewürzen, außer dem Basilikum, gut abschmecken, nochmals aufkochen, die Hitze fast ganz runter nehmen, Deckel drauf und 1,5 bis 2 Stunden leise köcheln lassen.",
+                                    "gering", 30, "Kein Bild");
+                Anlass mittagessen = this.anlassBean.findByName("Mittagessen");
+                rezept.getAnlässe().add(mittagessen);
+                mittagessen.getRezepten().add(rezept);
+                Grundzutat tomate1 = this.grundzutatBean.findByName("Tomaten");
+                rezept.getGrundzutaten().add(tomate1);
+                tomate1.getRezepten().add(rezept);
+                Grundzutat nudeln2 = this.grundzutatBean.findByName("Nudeln");
+                rezept.getGrundzutaten().add(nudeln2);
+                nudeln2.getRezepten().add(rezept);
+                Allergie laktose1 = this.allergieBean.findByName("Laktose");
+                rezept.getAllergien().add(laktose1);
+                laktose1.getRezepten().add(rezept);
                 
                 
                 
@@ -233,7 +250,7 @@ public class StartServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        //Zuerst Fall-Unterscheidung ob der "Rezepte filtern" oder "Rezepte suchen"-Button gedrückt wurde oder keines von beidem
+        //Die Startseite laden lassen falls der Button "action" nicht gedrückt wurde & leer ist
         request.setCharacterEncoding("utf-8");
 
         String action = request.getParameter("action");

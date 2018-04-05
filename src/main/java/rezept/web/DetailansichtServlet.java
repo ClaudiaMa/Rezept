@@ -59,8 +59,7 @@ public class DetailansichtServlet extends HttpServlet {
         
         
         //Falls ein Button nach Erscheinen der Detailansicht gedrückt wurde, an das Startseiteservlet weiterleiten
-        else {
-            
+        else { 
             response.sendRedirect(request.getContextPath() + "/index.html"); 
         }
         
@@ -74,7 +73,7 @@ public class DetailansichtServlet extends HttpServlet {
     
     
      private Rezept getRequestedRezept(HttpServletRequest request) {
-        // Zunächst davon ausgehen, dass ein neuer Satz angelegt werden soll
+        // Zunächst davon ausgehen, dass ein neues Rezept angelegt werden soll
         Rezept rezept = new Rezept();
       
         // ID aus der URL herausschneiden

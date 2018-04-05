@@ -1,13 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Diese Bean ermöglicht das Suchen und Filtern von Rezepten in der Datenbank
  */
 package rezept.ejb;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -29,28 +25,24 @@ public class RezeptBean extends EntityBean<Rezept, Long> {
     }
     
     //Methode um Rezepte aus der Suchleiste zu finden
-    //<editor-fold defaultstate="collapsed" desc="Suchen anhand Text in der Suchleiste">
-     public List<Rezept> search(String search) {
+    public List<Rezept> search(String search) {
         List<Rezept> rezepte = em.createQuery("SELECT r FROM Rezept r").getResultList();
         boolean stringIsValid = isValid(search);
         
         if (stringIsValid == true) {
-            // Hilfsobjekt zum Bauen des Query
-            CriteriaBuilder cb = this.em.getCriteriaBuilder();
-            // SELECT r FROM Rezept r
-            CriteriaQuery<Rezept> query = cb.createQuery(Rezept.class);
-            Root<Rezept> from = query.from(Rezept.class);
-            query.select(from);
-            // WHERE r.rezeptname LIKE :search
+            
+            // Wenn etwas in der Suchleiste steht, wird das zugehörige Rezept gesucht
             if (search != null && !search.trim().isEmpty()) {
                 rezepte = em.createQuery("SELECT r FROM Rezept r WHERE r.rezeptname = '" + search + "'").getResultList();
             }
             return rezepte;
+            
         } else {
             return null;
         }
      }
-    
+   
+    //Methode um zu validieren, ob Rezeptname richtig eingegeben wurde und keine Sonderzeichen oder Zahlen enthält
     public boolean isValid (String search) {
         String numberRegex = ".*[0-9].*";
         String specialcharRegex = ".*[!§$%&@+#'^°].*";
@@ -64,7 +56,8 @@ public class RezeptBean extends EntityBean<Rezept, Long> {
         }
     }
     
-     public boolean rezeptOk (String search) {
+    //Methode um zu validieren, ob Rezept alle angehakten Filter besitzt 
+    public boolean rezeptOk (String search) {
         String stringRegex = ".*(false).*";
         
         if ( search.matches(stringRegex)) {
@@ -78,18 +71,14 @@ public class RezeptBean extends EntityBean<Rezept, Long> {
      
     
     
-    //</editor-fold>
-     
+    
+    /* Methode um aufgrund gesetzter Filter, das richtige Rezept in der DB zu suchen
+    *  Um Übersicht zu bewahren, wird in der Konsole ausgegeben, welche Schritte gerade
+    *  getan werden und in welcher Iteration sich die Schleifen befinden
+    */
     public List<Rezept> searchByFilters(List<Anlass> anlaesse, List<Grundzutat> grundzutaten, List<Allergie> allergien) {
         
         List<Rezept> rezepte = em.createQuery("SELECT r FROM Rezept r").getResultList();
-        System.out.println("FUNKTIONIERT DER SELECT?????????????????????????????????????" + rezepte.toString());
-        
-        //for(int i = 0; i < rezept.size(); ++i) {}
-        
-            //String Array
-            
-           
             
             List<Rezept> ergebnisListe = new ArrayList<Rezept>();
             
@@ -104,8 +93,8 @@ public class RezeptBean extends EntityBean<Rezept, Long> {
                 List<Grundzutat> grundzutatVonRezept = rezept.getGrundzutaten();
                  
                 System.out.println("Das Rezept: " + rezept.getRezeptname() + " hat folgende Anlässe:   " + anlässeVonRezept );
-                 System.out.println("Das Rezept:   " + rezept.getRezeptname() + "  hat folgende Allergien: " + allergienVonRezept );
-                  System.out.println("Das Rezept:   " + rezept.getRezeptname() + " hat folgende Grundzutaten:   "+ grundzutatVonRezept );
+                System.out.println("Das Rezept:   " + rezept.getRezeptname() + "  hat folgende Allergien: " + allergienVonRezept );
+                System.out.println("Das Rezept:   " + rezept.getRezeptname() + " hat folgende Grundzutaten:   "+ grundzutatVonRezept );
                
                  
                  
@@ -127,7 +116,7 @@ public class RezeptBean extends EntityBean<Rezept, Long> {
                                  anlassWarEnthalten = "nein";
                              }
                          }                        
-                         System.out.println("Der angehakte Anlass: " + anlass.getName() + " war in der AllergieListe von Rezept enthalten?: " + anlassWarEnthalten);
+                         System.out.println("Der angehakte Anlass: " + anlass.getName() + " war in der Anlassliste von Rezept enthalten?: " + anlassWarEnthalten);
                          
                        if ( anlassWarEnthalten.equals("ja")) {
                            enthaeltAnlaesse = enthaeltAnlaesse + "true";
@@ -148,12 +137,12 @@ public class RezeptBean extends EntityBean<Rezept, Long> {
                          String allergieWarEnthalten = "";
                          for ( Allergie a: allergienVonRezept) {
                              if ( a.getName().equals(allergie.getName())) {
-                                 System.out.println("Der angehakte Allergie "+ allergie.getName() + "  ist auch in der Allergieliste von Rezept enthalten!");
+                                 System.out.println("Die angehakte Allergie "+ allergie.getName() + "  ist auch in der Allergieliste von Rezept enthalten!");
                                   allergieWarEnthalten = "ja";
                                   break;
                              }
                              else {
-                                 System.out.println("Der angehakte Allergie  " + allergie.getName() + " ist nicht in der Allergieliste von Rezept enthalten"); 
+                                 System.out.println("Die angehakte Allergie  " + allergie.getName() + " ist nicht in der Allergieliste von Rezept enthalten"); 
                                  allergieWarEnthalten = "nein";
                              }
                          }                        
